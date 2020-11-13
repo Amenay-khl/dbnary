@@ -1,0 +1,13 @@
+# This file overrides the file from docker-compose.yml
+
+version: "3"
+
+services:
+    wordpress:
+        volumes:
+            # Composer PHP files
+            - ../../plugins/dbnary-dashboard/vendor:/var/www/html/wp-content/plugins/dbnary-dashboard/vendor
+            # The main plugin source
+            - ../../plugins/dbnary-dashboard/src:/var/www/html/wp-content/plugins/dbnary-dashboard
+            # Devops scripts
+            - ../../plugins/dbnary-dashboard/devops/scripts:/scripts/plugins/dbnary-dashboard
