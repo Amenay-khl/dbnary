@@ -80,5 +80,8 @@
         "**/node_modules/*/**": true,
         "**/vendor/*/**": true,
         "**/vendor-temp/*/**": true
-    }
+    },
+    "cSpell.enableFiletypes": [
+        "markdown"
+    ]
 }

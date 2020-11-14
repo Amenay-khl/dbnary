@@ -1,3 +1,37 @@
+# GETALP Monorepo for DBnary Dashboard Wordpress Plugin
+
+This repository has been created to host the DBnary Dashboard Wordpress Plugin which presents the statistics related to the live version of DBnary database (hosted on virtuoso and accessible through http://kaiko.getalp.org/sparql, or http://kaiko.getalp.org/fct or via DBnary URI resolutions).
+
+The monorepo is derived from WP React Starter, but at the time of this monorepo creation, Composer (php installer) was updated to version 2 and I had to change some of the starter boiler plate.
+
+For this, I forked the WP React Starter github repo, then change the version number of 2 php plugins :
+
+```
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "metasyntactical/composer-plugin-license-check": "^1.0.0",
+```
+
+Then creation of the repository (and plugin) has been made using :
+
+```
+create-wp-react-app  create-workspace -w dbnary-dashboard -r https://github.com/serasset/wp-react-starter
+```
+
+## Preparing development environment
+
+As the main purpose of this plugin is to be added to the DBnary website (hosted on wordpress http://kaiko.getalp.org/about-dbnary), I exported the kaiko wordpress Posts, Pages and Media and imported it to the dev wordpress instance.
+
+-   Go to kaiko wp admin export page and export all content.
+-   in the monorepo root folder type `yarn docker:start`
+-   go to http://localhost:8080/ (the default user in wordpress/wordpress)
+-   Install and activate kaiko's theme (Responsive)
+-   Import the wordpress file (I had to remove a blank line at the beginning of the file)
+-   If necessary, create a new password for the imported users
+-   On kaiko and localhost, install and activate Customizer Import/Export plugin
+-   On kaiko, go to Theme Customizer, then Import/Export and export the customizations
+-   On localhost go to Theme Customizer, then Import/Export and import the customizations
+-   On localhost, the Menus has been imported but not correctly added so go the Menus and install the navigation Menu as the Header Menu (and generally speaking, mimic the DBnary settings in the Customization Editor, i.e. Menus, Homepage Settings, Widgets, ...).
+
 # WP React Starter: WordPress React Boilerplate
 
 <img align="right" src="https://matthias-web.com/wp-content/uploads/WP-React-Starter/Git/wp-react-starter-logo.png" alt="WP React Starter Logo" height="180" />
