@@ -43,6 +43,7 @@ class Assets {
         } elseif ($type === self::$TYPE_FRONTEND) {
             $handle = $this->enqueueScript('widget', 'widget.js', $scriptDeps);
             $this->enqueueStyle('widget', 'widget.css');
+            $handle = $this->enqueueScript('dashboard', 'dashboard.js', $scriptDeps);
         }
 
         // Localize script with server-side variables

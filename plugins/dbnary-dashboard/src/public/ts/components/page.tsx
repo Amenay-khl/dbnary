@@ -2,9 +2,14 @@ import React, { FC } from "react";
 import { observer } from "mobx-react";
 import { Notice, NoticeType } from "@dbnary-dashboard/utils";
 import { TodoOverview } from "./todo";
-import { RequestRouteHelloGet, ParamsRouteHelloGet, ResponseRouteHelloGet, locationRestHelloGet } from "../wp-api";
 import { useStores } from "../store";
 import { request, urlBuilder, __, _i } from "../utils";
+import {
+    RequestRoutePageCountGet,
+    ParamsRoutePageCountGet,
+    ResponseRoutePageCountGet,
+    locationRestPageCountGet
+} from "../wp-api/pagecount.get";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
 /**
@@ -12,12 +17,12 @@ import { request, urlBuilder, __, _i } from "../utils";
  *
  * @param e
  */
-async function doHelloWorldRestCall(event: React.MouseEvent) {
+async function doPageCountRestCall(event: React.MouseEvent) {
     event.persist();
-    const result = await request<RequestRouteHelloGet, ParamsRouteHelloGet, ResponseRouteHelloGet>({
-        location: locationRestHelloGet
+    const result = await request<RequestRoutePageCountGet, ParamsRoutePageCountGet, ResponseRoutePageCountGet>({
+        location: locationRestPageCountGet
     });
-    const usedUrl = urlBuilder({ location: locationRestHelloGet });
+    const usedUrl = urlBuilder({ location: locationRestPageCountGet });
     alert(`${usedUrl}\n\n${JSON.stringify(result, undefined, 4)}`);
     event.preventDefault();
 }
@@ -44,7 +49,7 @@ const ComponentLibrary: FC<{}> = observer(() => {
                     ),
                     {
                         a: (
-                            <a href="#" onClick={doHelloWorldRestCall}>
+                            <a href="#" onClick={doPageCountRestCall}>
                                 {optionStore.restUrl}
                             </a>
                         )
