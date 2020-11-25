@@ -5,11 +5,11 @@ import { TodoOverview } from "./todo";
 import { useStores } from "../store";
 import { request, urlBuilder, __, _i } from "../utils";
 import {
-    RequestRoutePageCountGet,
-    ParamsRoutePageCountGet,
-    ResponseRoutePageCountGet,
-    locationRestPageCountGet
-} from "../wp-api/pagecount.get";
+    RequestRouteMainCountsGet,
+    ParamsRouteMainCountsGet,
+    ResponseRouteMainCountsGet,
+    locationRestMainCountsGet
+} from "../wp-api/maincounts.get";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
 /**
@@ -19,10 +19,10 @@ import {
  */
 async function doPageCountRestCall(event: React.MouseEvent) {
     event.persist();
-    const result = await request<RequestRoutePageCountGet, ParamsRoutePageCountGet, ResponseRoutePageCountGet>({
-        location: locationRestPageCountGet
+    const result = await request<RequestRouteMainCountsGet, ParamsRouteMainCountsGet, ResponseRouteMainCountsGet>({
+        location: locationRestMainCountsGet
     });
-    const usedUrl = urlBuilder({ location: locationRestPageCountGet });
+    const usedUrl = urlBuilder({ location: locationRestMainCountsGet });
     alert(`${usedUrl}\n\n${JSON.stringify(result, undefined, 4)}`);
     event.preventDefault();
 }
