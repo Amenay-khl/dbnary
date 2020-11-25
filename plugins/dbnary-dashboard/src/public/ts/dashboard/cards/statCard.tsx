@@ -46,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-interface decorationSpec {
+interface DecorationSpec {
     avatarColor: string;
     avatarIcon: JSX.Element;
     title: string;
 }
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
-const StatCard: FC<{ stats: MainCountStats; decoration: decorationSpec }> = ({ stats, decoration, ...rest }) => {
+const StatCard: FC<{ stats: MainCountStats; decoration: DecorationSpec }> = ({ stats, decoration, ...rest }) => {
     const classes = useStyles(decoration);
 
     const value: string = isNaN(stats.count) ? "--" : stats.count.toLocaleString(undefined);
@@ -94,4 +94,4 @@ const StatCard: FC<{ stats: MainCountStats; decoration: decorationSpec }> = ({ s
     );
 };
 
-export { StatCard, MainCountStats, decorationSpec };
+export { StatCard, MainCountStats, DecorationSpec };

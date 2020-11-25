@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { request } from "../utils";
 import { colors } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { StatCard, MainCountStats, decorationSpec } from "./cards/statCard";
+import { StatCard, MainCountStats, DecorationSpec } from "./cards/statCard";
 import MenuBookRoundedIcon from "@material-ui/icons/MenuBookRounded";
 import TranslateRoundedIcon from "@material-ui/icons/TranslateRounded";
 import ListRoundedIcon from "@material-ui/icons/ListRounded";
@@ -48,7 +48,7 @@ function getCountStats(response: ResponseRouteMainCountsGet, feature: string): M
 
 /* Decorations for cards */
 
-const decorations: Record<string, decorationSpec> = {
+const decorations: Record<string, DecorationSpec> = {
     page: { avatarColor: colors.red[600], avatarIcon: <MenuBookRoundedIcon />, title: "Pages" },
     entry: { avatarColor: colors.blue[600], avatarIcon: <ListRoundedIcon />, title: "Entries" },
     sense: { avatarColor: colors.green[600], avatarIcon: <EmojiObjectsRoundedIcon />, title: "Lexical Senses" },
