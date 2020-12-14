@@ -15,6 +15,8 @@ defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file req
 class Dashboard {
     use UtilsProvider;
 
+    const COMPONENT_ID = DBNARY_DASHBOARD_SLUG . '-dashboard';
+
     /**
      * C'tor.
      */
@@ -29,7 +31,7 @@ class Dashboard {
      * @param array $instance
      */
     public function shortcode($args, $instance) {
-        echo '<div class="dbnary-dashboard-shortcode"></div>';
+        echo '<div id="' . self::COMPONENT_ID . '" class="wrap"></div>';
     }
 
 

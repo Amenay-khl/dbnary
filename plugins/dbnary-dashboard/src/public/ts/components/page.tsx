@@ -3,13 +3,7 @@ import { observer } from "mobx-react";
 import { Notice, NoticeType } from "@dbnary-dashboard/utils";
 import { TodoOverview } from "./todo";
 import { useStores } from "../store";
-import { request, urlBuilder, __, _i } from "../utils";
-import {
-    RequestRouteMainCountsGet,
-    ParamsRouteMainCountsGet,
-    ResponseRouteMainCountsGet,
-    locationRestMainCountsGet
-} from "../wp-api/maincounts.get";
+import { doMainCountsForAllLanguages } from "../wp-api/sparql.get";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
 /**
@@ -17,13 +11,10 @@ import {
  *
  * @param e
  */
-async function doPageCountRestCall(event: React.MouseEvent) {
+async function doSparqlQuery(event: React.MouseEvent) {
     event.persist();
-    const result = await request<RequestRouteMainCountsGet, ParamsRouteMainCountsGet, ResponseRouteMainCountsGet>({
-        location: locationRestMainCountsGet
-    });
-    const usedUrl = urlBuilder({ location: locationRestMainCountsGet });
-    alert(`${usedUrl}\n\n${JSON.stringify(result, undefined, 4)}`);
+    const result = await doMainCountsForAllLanguages();
+    alert(`${JSON.stringify(result, undefined, 4)}`);
     event.preventDefault();
 }
 
@@ -42,14 +33,14 @@ const ComponentLibrary: FC<{}> = observer(() => {
             <Notice type={NoticeType.Info}>
                 {_i(
                     __(
-                        "The WP REST API URL of the plugin is: {{a}}%(restUrl)s{{/a}} (localized variable, click for hello world example)",
+                        "The WP REST API URL of the plugin is: {{a}}%(restUrl)s{{/a}} (localized variable, click for sparql example)",
                         {
                             restUrl: optionStore.restUrl
                         }
                     ),
                     {
                         a: (
-                            <a href="#" onClick={doPageCountRestCall}>
+                            <a href="#" onClick={doSparqlQuery}>
                                 {optionStore.restUrl}
                             </a>
                         )

@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import { request } from "../utils";
 import { colors } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { StatCard, MainCountStats, DecorationSpec } from "./cards/statCard";
@@ -7,22 +6,16 @@ import MenuBookRoundedIcon from "@material-ui/icons/MenuBookRounded";
 import TranslateRoundedIcon from "@material-ui/icons/TranslateRounded";
 import ListRoundedIcon from "@material-ui/icons/ListRounded";
 import EmojiObjectsRoundedIcon from "@material-ui/icons/EmojiObjectsRounded";
-import {
-    RequestRouteMainCountsGet,
-    ParamsRouteMainCountsGet,
-    ResponseRouteMainCountsGet,
-    locationRestMainCountsGet,
-    ResponseRouteMainCountsGet_empty
-} from "../wp-api/maincounts.get";
+import { SparqlResponse, doMainCountsRestCall } from "../wp-api/sparql.get";
 
 /* API calls */
-async function doMainCountsRestCall(): Promise<ResponseRouteMainCountsGet> {
-    return await request<RequestRouteMainCountsGet, ParamsRouteMainCountsGet, ResponseRouteMainCountsGet>({
-        location: locationRestMainCountsGet
-    });
-}
+//async function doMainCountsRestCall(): Promise<ResponseRouteMainCountsGet> {
+//    return await request<RequestRouteMainCountsGet, ParamsRouteMainCountsGet, ResponseRouteMainCountsGet>({
+//        location: locationRestMainCountsGet
+//    });
+//}
 
-function getCountStats(response: ResponseRouteMainCountsGet, feature: string): MainCountStats {
+function getCountStats(response: SparqlResponse, feature: string): MainCountStats {
     if (
         response &&
         response.head &&
@@ -56,7 +49,7 @@ const decorations: Record<string, DecorationSpec> = {
 };
 
 const StatsLine: FC<{}> = () => {
-    const [mainCounts, setMainCounts] = useState(ResponseRouteMainCountsGet_empty);
+    const [mainCounts, setMainCounts] = useState<SparqlResponse>(null);
 
     useEffect(() => {
         doMainCountsRestCall().then(setMainCounts);

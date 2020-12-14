@@ -1,2 +1,2 @@
 export * from "./hello.get";
-export * from "./pagecount.get";
+export * from "./sparql.get";

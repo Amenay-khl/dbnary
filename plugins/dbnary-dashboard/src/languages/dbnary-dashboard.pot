@@ -17,12 +17,24 @@ msgstr ""
 msgid "dbnary-dashboard"
 msgstr ""
 
+#. Plugin URI of the plugin
+msgid "http://kaiko.getalp.org/about-dbnary"
+msgstr ""
+
+#. Description of the plugin
+msgid "The DBnary Dashboard Plugin is used to show the current state of the ever evolving DBnary LLOD resource."
+msgstr ""
+
 #. Author of the plugin
 msgid "Gilles Sérasset"
 msgstr ""
 
 #. Author URI of the plugin
 msgid "http://serasset.bitbucket.io/"
+msgstr ""
+
+#: inc/rest/SparqlRoute.php:83
+msgid "No Query Parameter to Sparql Proxy"
 msgstr ""
 
 #: inc/view/widget/Widget.php:24

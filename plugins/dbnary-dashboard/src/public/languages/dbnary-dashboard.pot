@@ -11,43 +11,43 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 
-#: admin.js:304
+#: admin.js:299
 msgid "The text domain of the plugin is: %(textDomain)s (localized variable)"
 msgstr ""
 
-#: admin.js:308
-msgid "The WP REST API URL of the plugin is: {{a}}%(restUrl)s{{/a}} (localized variable, click for hello world example)"
+#: admin.js:303
+msgid "The WP REST API URL of the plugin is: {{a}}%(restUrl)s{{/a}} (localized variable, click for sparql example)"
 msgstr ""
 
-#: admin.js:317
+#: admin.js:312
 msgid "The is an informative notice"
 msgstr ""
 
-#: admin.js:319
+#: admin.js:314
 msgid "Your action was successful"
 msgstr ""
 
-#: admin.js:321
+#: admin.js:316
 msgid "An unexpected error has occurred"
 msgstr ""
 
-#: admin.js:376
+#: admin.js:371
 msgid "Todo list"
 msgstr ""
 
-#: admin.js:376
+#: admin.js:371
 msgid "This section demonstrates a MobX Todo list (no peristence to server)."
 msgstr ""
 
-#: admin.js:383
+#: admin.js:378
 msgid "What needs to be done?"
 msgstr ""
 
-#: admin.js:390
+#: admin.js:385
 msgid "Add"
 msgstr ""
 
-#: admin.js:454
+#: admin.js:449
 msgid "Remove"
 msgstr ""
 

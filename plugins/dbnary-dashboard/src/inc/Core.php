@@ -2,7 +2,7 @@
 namespace GillesSerasset\DbnaryDashboard;
 use GillesSerasset\DbnaryDashboard\base\Core as BaseCore;
 use GillesSerasset\DbnaryDashboard\rest\HelloWorld;
-use GillesSerasset\DbnaryDashboard\rest\PageCount;
+use GillesSerasset\DbnaryDashboard\rest\SparqlRoute;
 use GillesSerasset\DbnaryDashboard\view\menu\Page;
 use GillesSerasset\DbnaryDashboard\view\dashboard\Dashboard;
 use GillesSerasset\DbnaryDashboard\view\widget\Widget;
@@ -38,7 +38,7 @@ class Core extends BaseCore {
     public function init() {
         // Register all your hooks here
         add_action('rest_api_init', [HelloWorld::instance(), 'rest_api_init']);
-        add_action('rest_api_init', [PageCount::instance(), 'rest_api_init']);
+        add_action('rest_api_init', [SparqlRoute::instance(), 'rest_api_init']);
         add_action('admin_enqueue_scripts', [$this->getAssets(), 'admin_enqueue_scripts']);
         add_action('wp_enqueue_scripts', [$this->getAssets(), 'wp_enqueue_scripts']);
         add_action('admin_menu', [Page::instance(), 'admin_menu']);

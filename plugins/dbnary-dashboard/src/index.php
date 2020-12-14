@@ -4,8 +4,8 @@
  *
  * @wordpress-plugin
  * Plugin Name: 	dbnary-dashboard
- * Plugin URI:		
- * Description: 	
+ * Plugin URI:		http://kaiko.getalp.org/about-dbnary
+ * Description: 	The DBnary Dashboard Plugin is used to show the current state of the ever evolving DBnary LLOD resource.
  * Author:          Gilles Sérasset
  * Author URI:		http://serasset.bitbucket.io/
  * Version: 		1.0.0

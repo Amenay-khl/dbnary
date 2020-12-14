@@ -7,10 +7,17 @@
 import "@dbnary-dashboard/utils"; // Import once for startup polyfilling (e. g. setimmediate)
 import { render } from "react-dom";
 import { DbnaryDashboard } from "./dashboard/";
-import "./style/widget.scss";
+import { RootStore } from "./store";
 
-// Query DOM for all widget wrapper divs
-const shortcodes = document.querySelectorAll("div.dbnary-dashboard-shortcode");
+// Query DOM for the shortcod div (we assume the shortcode is used only once in a page).
+const node = document.getElementById(`${RootStore.get.optionStore.slug}-dashboard`);
 
 // Iterate over the DOM nodes and render a React component into each node
-shortcodes.forEach((item) => render(<DbnaryDashboard />, item));
+if (node) {
+    render(
+        <RootStore.StoreProvider>
+            <DbnaryDashboard />
+        </RootStore.StoreProvider>,
+        node
+    );
+}
