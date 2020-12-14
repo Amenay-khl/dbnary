@@ -144,7 +144,8 @@
         "mobx-react": "^6.2.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "react-test-renderer": "^16.13.1"
+        "react-test-renderer": "^16.13.1",
+        "recharts": "^1.8.5"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",
