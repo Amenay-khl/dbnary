@@ -53,7 +53,7 @@ function extractGlobalStubIdentifiers(files: string[]) {
     });
 
     for (const file of files) {
-        const parsed = parser.parseCode(readFileSync(file, { encoding: "UTF-8" }));
+        const parsed = parser.parseCode(readFileSync(file, { encoding: "utf-8" }));
         result.push(
             ...findKinds(parsed, "kind").map((id: { name: string; inNamespace: string }) => id.inNamespace + id.name)
         );

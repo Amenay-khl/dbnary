@@ -28,7 +28,7 @@ async function generate() {
 
     // Regenerate launch.json
     const launchJsonPath = resolve(process.env.PWD, ".vscode/launch.json");
-    let launchJson = readFileSync(launchJsonPath, { encoding: "UTF-8" });
+    let launchJson = readFileSync(launchJsonPath, { encoding: "utf-8" });
     let stringedPathMapping = JSON.stringify(pathMapping).substr(1);
     stringedPathMapping = stringedPathMapping.substring(0, stringedPathMapping.length - 1);
     launchJson = launchJson.replace(
@@ -36,7 +36,7 @@ async function generate() {
         `$1${stringedPathMapping}\n$3`
     );
 
-    writeFileSync(launchJsonPath, launchJson, { encoding: "UTF-8" });
+    writeFileSync(launchJsonPath, launchJson, { encoding: "utf-8" });
 }
 
 generate();

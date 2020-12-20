@@ -149,12 +149,12 @@ function applyDefaultRunnerConfiguration(grunt: IGrunt) {
      */
     grunt.registerTask("i18n:prepare:wp", () =>
         grunt.file.expand([`${pkg.slug ? "src/public/dev" : "dev"}/*.js`, "!**/*vendor-*"]).forEach((file) => {
-            const content = readFileSync(file, { encoding: "UTF-8" });
+            const content = readFileSync(file, { encoding: "utf-8" });
             const regex = /(Object\([A-Za-z0-9_]+__WEBPACK_IMPORTED_MODULE[A-Za-z0-9_]+\[)\/\* ?(__|_n|_x|_nx) \*\/ "[A-Za-z0-9_]"/gm;
             const target = `${dirname(file)}/i18n-dir/`;
             !existsSync(target) && mkdirSync(target);
             writeFileSync(`${target}${basename(file)}`, content.replace(regex, `$1"$2"`), {
-                encoding: "UTF-8"
+                encoding: "utf-8"
             });
         })
     );

@@ -272,7 +272,7 @@ function applyPluginRunnerConfiguration(grunt: IGrunt) {
             .map((relative) => resolve("..", relative));
         const whitelist = extractGlobalStubIdentifiers(stubPathes.concat(addOnPathes, apiPathes));
         writeFileSync(tmpStubFile, JSON.stringify(whitelist), {
-            encoding: "UTF-8"
+            encoding: "utf-8"
         });
 
         // Execute the php-scoper
