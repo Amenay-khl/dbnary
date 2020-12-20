@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Avatar, Box, Card, CardContent, CardHeader, Typography, colors, makeStyles } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import { DecorationSpec } from "../styles";
 
 interface MainCountStats {
     count: number;
@@ -14,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         height: "100%"
     },
-    avatar: (props: { avatarColor: string }) => ({
-        backgroundColor: props.avatarColor,
+    avatar: (props: DecorationSpec) => ({
+        backgroundColor: props.color,
         height: 38,
         width: 38
     }),
@@ -45,12 +46,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: colors.grey[100]
     }
 }));
-
-interface DecorationSpec {
-    avatarColor: string;
-    avatarIcon: JSX.Element;
-    title: string;
-}
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
 const StatCard: FC<{ stats: MainCountStats; decoration: DecorationSpec }> = ({ stats, decoration, ...rest }) => {
@@ -94,4 +89,4 @@ const StatCard: FC<{ stats: MainCountStats; decoration: DecorationSpec }> = ({ s
     );
 };
 
-export { StatCard, MainCountStats, DecorationSpec };
+export { StatCard, MainCountStats };

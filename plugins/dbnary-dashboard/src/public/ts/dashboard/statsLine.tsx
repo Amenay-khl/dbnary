@@ -1,12 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { colors } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { StatCard, MainCountStats, DecorationSpec } from "./cards/statCard";
-import MenuBookRoundedIcon from "@material-ui/icons/MenuBookRounded";
-import TranslateRoundedIcon from "@material-ui/icons/TranslateRounded";
-import ListRoundedIcon from "@material-ui/icons/ListRounded";
-import EmojiObjectsRoundedIcon from "@material-ui/icons/EmojiObjectsRounded";
+import { StatCard, MainCountStats } from "./cards/statCard";
+
 import { SparqlResponse, doMainCountsRestCall } from "../wp-api/sparql.get";
+import { DecorationSpec } from "./styles";
 
 /* API calls */
 //async function doMainCountsRestCall(): Promise<ResponseRouteMainCountsGet> {
@@ -39,16 +36,7 @@ function getCountStats(response: SparqlResponse, feature: string): MainCountStat
     }
 }
 
-/* Decorations for cards */
-
-const decorations: Record<string, DecorationSpec> = {
-    page: { avatarColor: colors.red[600], avatarIcon: <MenuBookRoundedIcon />, title: "Pages" },
-    entry: { avatarColor: colors.blue[600], avatarIcon: <ListRoundedIcon />, title: "Entries" },
-    sense: { avatarColor: colors.green[600], avatarIcon: <EmojiObjectsRoundedIcon />, title: "Lexical Senses" },
-    translation: { avatarColor: colors.yellow[600], avatarIcon: <TranslateRoundedIcon />, title: "Translations" }
-};
-
-const StatsLine: FC<{}> = () => {
+const StatsLine: FC<{ decorations: Record<string, DecorationSpec> }> = ({ decorations, ...rest }) => {
     const [mainCounts, setMainCounts] = useState<SparqlResponse>(null);
 
     useEffect(() => {
@@ -56,17 +44,17 @@ const StatsLine: FC<{}> = () => {
     }, []);
 
     return (
-        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center">
-            <Grid item xs={3} md={4} lg={3}>
+        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center" {...rest}>
+            <Grid item xs={3}>
                 <StatCard decoration={decorations["page"]} stats={getCountStats(mainCounts, "pageCount")} />
             </Grid>
-            <Grid item xs={3} md={4} lg={3}>
+            <Grid item xs={3}>
                 <StatCard decoration={decorations["entry"]} stats={getCountStats(mainCounts, "entryCount")} />
             </Grid>
-            <Grid item xs={3} md={4} lg={3}>
+            <Grid item xs={3}>
                 <StatCard decoration={decorations["sense"]} stats={getCountStats(mainCounts, "senseCount")} />
             </Grid>
-            <Grid item xs={3} md={4} lg={3}>
+            <Grid item xs={3}>
                 <StatCard
                     decoration={decorations["translation"]}
                     stats={getCountStats(mainCounts, "translationCount")}

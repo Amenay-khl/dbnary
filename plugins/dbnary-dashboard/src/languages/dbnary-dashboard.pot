@@ -33,7 +33,7 @@ msgstr ""
 msgid "http://serasset.bitbucket.io/"
 msgstr ""
 
-#: inc/rest/SparqlRoute.php:83
+#: inc/rest/SparqlRoute.php:48
 msgid "No Query Parameter to Sparql Proxy"
 msgstr ""
 

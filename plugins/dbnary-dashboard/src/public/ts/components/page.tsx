@@ -4,6 +4,7 @@ import { Notice, NoticeType } from "@dbnary-dashboard/utils";
 import { TodoOverview } from "./todo";
 import { useStores } from "../store";
 import { doMainCountsForAllLanguages } from "../wp-api/sparql.get";
+import { __, _i } from "../utils";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
 /**

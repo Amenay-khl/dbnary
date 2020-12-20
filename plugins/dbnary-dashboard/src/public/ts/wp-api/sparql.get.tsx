@@ -70,7 +70,7 @@ const mainCountsForAllLanguages =
     "SELECT ?Language\n" +
     "    (sample(?maxversion) as ?Version)\n" +
     "    (sample(?num_entries) as ?Entries)\n" +
-    "    (sample(?num_pages) as ?Vocables)\n" +
+    "    (sample(?num_pages) as ?Pages)\n" +
     "    (sample(?num_senses) as ?Senses)\n" +
     "    (sample(?num_translations) as ?Translations)\n" +
     "WHERE\n" +

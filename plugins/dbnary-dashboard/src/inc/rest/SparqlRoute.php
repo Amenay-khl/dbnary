@@ -34,46 +34,11 @@ class SparqlRoute {
         ]);
     }
 
-    private const MAIN_STATS_SPARQL_QUERY = 'SELECT ?Language
-        (sample(?maxversion) as ?Version)
-        (sample(?num_entries) as ?Entries)
-        (sample(?num_pages) as ?Vocables)
-        (sample(?num_senses) as ?Senses)
-        (sample(?num_translations) as ?Translations)
-    WHERE
-    {
-        {
-         # Select the latest version
-         SELECT distinct(?version) as ?maxversion
-         WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }
-         ORDER BY DESC(?version) LIMIT 1
-        }
-
-        ?obs
-            qb:dataSet dbnstats:dbnaryStatisticsCube ;
-            dbnary:observationLanguage ?Language ;
-            dbnary:lexicalEntryCount ?num_entries ;
-            dbnary:pageCount ?num_pages ;
-            dbnary:lexicalSenseCount ?num_senses ;
-            dbnary:translationsCount ?num_translations ;
-            dbnary:wiktionaryDumpVersion ?maxversion .
-    } GROUP BY ?Language
-ORDER BY ?Language';
-
     /**
-     * See API docs.
+     * routeSparql provides a sparql query route from wp server to sparql endpoint so that we do not have to deal with CORS problems.
      *
-     * @api {get} /dbnary-dashboard/v1/mainstats Get page count
-     * @apiHeader {string} X-WP-Nonce
-     * @apiName DBnaryPageCount
-     * @apiGroup MainStats
-     *
-     * @apiSuccessExample {csv} Success-Response:
-     * { "head": { "link": [], "vars": ["version", "pageCount", "translationCount", "senseCount", "entryCount"] },
-     *   "results": { "distinct": false, "ordered": true, "bindings": [
-     *       { "version": { "type": "literal", "value": "20201020" }	, "pageCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "5883121" }	, "translationCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "7568230" }	, "senseCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "4219322" }	, "entryCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "5812121" }},
-     *       { "version": { "type": "literal", "value": "20201001" }	, "pageCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "5874729" }	, "translationCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "7539825" }	, "senseCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "4210694" }	, "entryCount": { "type": "typed-literal", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "5803345" }} ] } }
-     * @apiVersion 0.1.0
+     * @param  mixed $request the WP request
+     * @return a request response fetched from the endpoint
      */
     public function routeSparql(WP_REST_Request $request) {
         // first we get the query parameters from the request
@@ -82,23 +47,23 @@ ORDER BY ?Language';
             error_log('No Query Parameter to Sparql Proxy');
             return new WP_Error('data', __('No Query Parameter to Sparql Proxy'), ['status' => 404]);
         }
-        error_log('query=' . $params['query']);
+        // error_log('query=' . $params['query']);
 
         $params['default-graph-uri'] = '';
         $params['format'] = 'application/sparql-results+json';
         $params['timeout'] = 0;
         // convert the params to a string
         $query = http_build_query($params);
-        error_log("http://kaiko.getalp.org/sparql?$query");
+        // error_log("http://kaiko.getalp.org/sparql?$query");
         // build the URL using the endpoint and any params and make a remote GET request
         $request = wp_remote_get("http://kaiko.getalp.org/sparql?$query");
         // Retrieve information
         $response_code = wp_remote_retrieve_response_code($request);
         $response_message = wp_remote_retrieve_response_message($request);
         $response_body = wp_remote_retrieve_body($request);
-        error_log($response_code);
-        error_log($response_message);
-        error_log($response_body);
+        // error_log($response_code);
+        // error_log($response_message);
+        // error_log($response_body);
 
         if (!is_wp_error($request) ) {
             return new WP_REST_Response(json_decode($response_body));
