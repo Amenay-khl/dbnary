@@ -31,7 +31,7 @@ class Dashboard {
      * @param array $instance
      */
     public function shortcode($args, $instance) {
-        echo '<div id="' . self::COMPONENT_ID . '" class="wrap"></div>';
+        return '<div id="' . self::COMPONENT_ID . '" class="wrap"></div>';
     }
 
 

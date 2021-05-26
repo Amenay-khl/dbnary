@@ -15,10 +15,8 @@ function valueAsInt(val: TypedValue): number {
     return parseInt(val.value);
 }
 
-function valueAsLanguage(val: TypedValue): string {
-    return getEnglishName(val.value);
-}
-type MainBarChartProps = "Language" | "Version" | "Entries" | "Pages" | "Translations" | "Senses";
+/* The decorations to provide to the generic barchart */
+type MainBarChartProps = { decorations: Record<string, DecorationSpec>; provider: () => Promise<SparqlResponse> };
 
 const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
@@ -78,7 +76,8 @@ const XAxisLanguageTick: FC<any> = ({ x, y, payload }) => {
     );
 };
 
-const YAxisNumberTick: FC<any> = ({ x, y, payload }) => {
+const YAxisNumberTick: FC<any> = (props) => {
+    const { x, y, payload } = props;
     return (
         <g transform={`translate(${x},${y})`}>
             <text
@@ -89,7 +88,7 @@ const YAxisNumberTick: FC<any> = ({ x, y, payload }) => {
                 fontSize="0.7rem"
                 fontFamily="Roboto, sans-serif, Helvetica, Arial"
             >
-                {payload.value}
+                {kbTickFormat(payload.value)}
             </text>
         </g>
     );
@@ -99,7 +98,7 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-const MainBarChart: FC<{ decorations: Record<string, DecorationSpec> }> = ({ decorations, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const classes = useStyles();
 
@@ -131,7 +130,7 @@ const MainBarChart: FC<{ decorations: Record<string, DecorationSpec> }> = ({ dec
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tickFormatter={kbTickFormat} tick={<YAxisNumberTick />} />
+                        <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
                         <Bar dataKey="Pages" stackId="a" fill={decorations["page"].color} />
