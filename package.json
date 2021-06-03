@@ -160,16 +160,14 @@
         "tabWidth": 4,
         "endOfLine": "lf",
         "trailingComma": "none",
-        "overrides": [
-            {
-                "files": "*.php",
-                "options": {
-                    "singleQuote": true,
-                    "trailingCommaPHP": false,
-                    "braceStyle": "1tbs"
-                }
+        "overrides": [{
+            "files": "*.php",
+            "options": {
+                "singleQuote": true,
+                "trailingCommaPHP": false,
+                "braceStyle": "1tbs"
             }
-        ]
+        }]
     },
     "devDependencies": {
         "@commitlint/cli": "^9.0.1",
@@ -198,7 +196,6 @@
         "postinstall-postinstall": "^2.1.0",
         "prettier": "^2.0.5",
         "rimraf": "^3.0.2",
-        "typescript": "~3.9.5",
-        "webpack": "^5.38.1"
+        "typescript": "~3.9.5"
     }
 }
