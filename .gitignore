@@ -48,6 +48,7 @@ vendor-temp
 # dotenv environment variables file
 .env
 .DS_Store
+.idea
 .idea/dbnary-dashboard.iml
 .idea/modules.xml
 .idea/vcs.xml
