@@ -14,6 +14,7 @@ import { NumberOfElements } from "./numberOfElements/";
 const node = document.getElementById(`${RootStore.get.optionStore.slug}-dashboard`);
 const node2 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfElements`);
 
+let nodes;
 // Iterate over the DOM nodes and render a React component into each node
 if (node) {
     render(
@@ -22,7 +23,8 @@ if (node) {
         </RootStore.StoreProvider>,
         node
     );
-} else if (node2) {
+}
+if (node2) {
     render(
         <RootStore.StoreProvider>
             <NumberOfElements />
