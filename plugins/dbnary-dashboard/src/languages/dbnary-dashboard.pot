@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Gilles Sérasset
+# Copyright (C) 2021 Gilles Sérasset
 # This file is distributed under the same license as the dbnary-dashboard plugin.
 msgid ""
 msgstr ""
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: n/a\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 
 #. Plugin Name of the plugin
 msgid "dbnary-dashboard"
