@@ -1,6 +1,6 @@
 import { colors, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import React, { FC, useEffect, useState } from "react";
+import React, { Component, FC, useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
@@ -100,6 +100,10 @@ const langNameFormatter = (label: any) => {
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
+    const [isTranslations, setIsTranslations] = useState(true);
+    const [isSenses, setIsSenses] = useState(true);
+    const [isEntries, setIsEntries] = useState(true);
+    const [isVocables, setIsVocables] = useState(true);
     const classes = useStyles();
 
     useEffect(() => {
@@ -117,6 +121,39 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
+            <Grid>
+                <h5 className="text-center">Vocables</h5>
+                <input
+                    type="checkbox"
+                    checked={isTranslations}
+                    style={{ width: 20, height: 20 }}
+                    onClick={() => setIsTranslations(!isTranslations)}
+                />
+
+                <h5 className="text-center">Entries</h5>
+                <input
+                    type="checkbox"
+                    checked={isSenses}
+                    style={{ width: 20, height: 20 }}
+                    onClick={() => setIsSenses(!isSenses)}
+                />
+
+                <h5 className="text-center">Senses</h5>
+                <input
+                    type="checkbox"
+                    checked={isEntries}
+                    style={{ width: 20, height: 20 }}
+                    onClick={() => setIsEntries(!isEntries)}
+                />
+
+                <h5 className="text-center">Translations</h5>
+                <input
+                    type="checkbox"
+                    checked={isVocables}
+                    style={{ width: 20, height: 20 }}
+                    onClick={() => setIsVocables(!isVocables)}
+                />
+            </Grid>
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart
@@ -133,10 +170,14 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
-                        <Bar dataKey="Pages" stackId="a" fill={decorations["page"].color} />
-                        <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
-                        <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />
-                        <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
+                        {isVocables ? <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} /> : ""}
+                        {isEntries ? <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} /> : ""}
+                        {isSenses ? <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} /> : ""}
+                        {isTranslations ? (
+                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
+                        ) : (
+                            ""
+                        )}
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>
