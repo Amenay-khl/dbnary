@@ -1,0 +1,14 @@
+.checkboxes label {
+  display: inline-block;
+  padding-right: 50px;
+  white-space: nowrap;
+  margin-top : 15px;
+}
+.checkboxes input {
+  vertical-align: middle;
+  margin-top : 15px;
+}
+.checkboxes label span {
+  vertical-align: middle;
+  margin-top : 15px;
+}
