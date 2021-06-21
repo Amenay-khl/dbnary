@@ -6,7 +6,6 @@ import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-a
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
-import * as css from "./style.css";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -23,7 +22,7 @@ const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
     Version: valueAsString,
     Entries: valueAsInt,
-    Pages: valueAsInt,
+    Vocables: valueAsInt,
     Translations: valueAsInt,
     Senses: valueAsInt
 };
@@ -123,45 +122,47 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             {...rest}
         >
             <Grid>
-                <div className="css-checkbox">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isTranslations}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsTranslations(!isTranslations)}
-                        />
-                        <span>Translations</span>
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isSenses}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsSenses(!isSenses)}
-                        />
-                        <span>Senses</span>
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isEntries}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsEntries(!isEntries)}
-                        />
-                        <span>Entries</span>
-                    </label>
+                <form>
+                    <div className="checkboxes">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isTranslations}
+                                style={{ width: 20, height: 20 }}
+                                onClick={() => setIsTranslations(!isTranslations)}
+                            />
+                            <span>Translations</span>
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isSenses}
+                                style={{ width: 20, height: 20 }}
+                                onClick={() => setIsSenses(!isSenses)}
+                            />
+                            <span>Senses</span>
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isEntries}
+                                style={{ width: 20, height: 20 }}
+                                onClick={() => setIsEntries(!isEntries)}
+                            />
+                            <span>Entries</span>
+                        </label>
 
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isVocables}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsVocables(!isVocables)}
-                        />
-                        <span>Vocables</span>
-                    </label>
-                </div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isVocables}
+                                style={{ width: 20, height: 20 }}
+                                onClick={() => setIsVocables(!isVocables)}
+                            />
+                            <span>Vocables</span>
+                        </label>
+                    </div>
+                </form>
             </Grid>
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>

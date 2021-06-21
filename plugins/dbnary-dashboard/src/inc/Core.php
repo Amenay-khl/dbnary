@@ -7,6 +7,7 @@ use GillesSerasset\DbnaryDashboard\view\menu\Page;
 use GillesSerasset\DbnaryDashboard\view\dashboard\Dashboard;
 use GillesSerasset\DbnaryDashboard\view\widget\Widget;
 use GillesSerasset\DbnaryDashboard\view\numberOfElements\NumberOfElements;
+use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelations\NumberOfLexicalRelations;
 
 
 // @codeCoverageIgnoreStart
@@ -46,6 +47,8 @@ class Core extends BaseCore {
         add_action('admin_menu', [Page::instance(), 'admin_menu']);
         add_shortcode('dbdashboard', [Dashboard::instance(), 'shortcode']);
         add_shortcode('nbOfElements', [NumberOfElements::instance(), 'shortcode']);
+        add_shortcode('nbOfLexicalRelation', [NumberOfLexicalRelations::instance(), 'shortcode']);
+
 
     }
 

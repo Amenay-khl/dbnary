@@ -5,6 +5,7 @@ import {
     RouteRequestInterface,
     RouteParamsInterface
 } from "@dbnary-dashboard/utils";
+import { version } from "fork-ts-checker-webpack-plugin";
 import { request } from "../utils";
 
 export const sparqlGetLocation: RouteLocationInterface = {
@@ -101,3 +102,108 @@ export async function doMainCountsForAllLanguages(): Promise<SparqlResponse> {
         }
     });
 }
+
+const mainCountsForAllLexicalRelations =
+"SELECT ?l , ?maxversion, ?nym, ?count  \n" +
+  " WHERE{\n" +
+  " {\n" +
+  "      # Select the latest verison \n" +
+  "     SELECT distinct(?version) as ?maxversion\n" +
+  "    WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+  "      ORDER BY DESC (?version) LIMIT 1
+  " }\n" +
+  "  ?o a qb:Observation;\n" +
+  "  qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
+  "  dbnary:observationLanguage ?l;\n" +
+  "  dbnary:wiktionaryDumpVersion ?maxversion;\n" +
+  "  dbnary:nymRelation ?nym;\n" +
+  "  dbnary:count ?count .\n" +
+  " }";
+
+
+
+export async function domainCountsForAllLexicalRelations(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: mainCountsForAllLexicalRelations
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+// select ?lg, ?nbHomonyms where {
+//     {
+//         select ?lg, count(distinct ?page) as ?nbHomonyms where {
+//             ?page dbnary:describes ?le .
+//             ?le dct:language ?lg .
+//             { SELECT distinct ?page , ?partOfSpeech where {
+//                 ?page dbnary:describes ?le1 ; dbnary:describes ?le2 .
+//                 ?le1 lexinfo:partOfSpeech ?partOfSpeech.
+//                 ?le2 lexinfo:partOfSpeech ?partOfSpeech.
+//                 FILTER (?le1 != ?le2)
+//                 }
+//             }
+//         } group by ?lg
+//     }
+// }
+// group by ?lg
+
+
+
+
+// SELECT ?Language
+
+// count(distinct ?num_syn) as ?syn
+
+// WHERE
+// {
+
+// ?obs
+// dct:language ?Language ;
+// dbnary:synonym ?num_syn .
+
+// }
+// GROUP BY ?Language
+// ORDER BY ?Language
+
+// "SELECT ?Language\n" +
+//     "    (sample(?maxversion) as ?Version)\n" +
+//     "    (sample(?num_syn) as ?syn)\n" +
+//     "    (sample(?num_qsyn) as ?qsyn)\n" +
+//     "    (sample(?num_ant) as ?ant)\n" +
+//     "    (sample(?num_hyper) as ?hyper)\n" +
+//     "    (sample(?num_hypo) as ?hypo)\n" +
+//     "    (sample(?num_mero) as ?mero)\n" +
+//     "    (sample(?num_holo) as ?holo)\n" +
+//     "    (sample(?num_tropo) as ?tropo)\n" +
+//     "WHERE\n" +
+//     "{\n" +
+//     "    {\n" +
+//     "     # Select the latest version\n" +
+//     "     SELECT distinct(?version) as ?maxversion\n" +
+//     "     WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
+//     "     ORDER BY DESC(?version) LIMIT 1\n" +
+//     "}\n" +
+//     "?obs\n" +
+//     "    qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+//     "    dbnary:observationLanguage ?Language ;\n" +
+//     "    dbnary:synonym ?num_syn ;\n" +
+//     "    dbnary:approximateSynonym ?num_qsyn ;\n" +
+//     "    dbnary:antonym ?num_ant ;\n" +
+//     "    dbnary:hypernym ?num_hyper ;\n" +
+//     "    dbnary:hyponym ?num_hypo ;\n" +
+//     "    dbnary:meronym ?num_mero ;\n" +
+//     "    dbnary:holonym ?num_holo ;\n" +
+//     "    dbnary:troponym ?num_tropo ;\n" +
+//     "    dbnary:wiktionaryDumpVersion ?maxversion .\n" +
+//     "}\n" +
+//     "GROUP BY ?Language\n" +
+//     "ORDER BY ?Language";
