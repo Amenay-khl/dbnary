@@ -104,23 +104,21 @@ export async function doMainCountsForAllLanguages(): Promise<SparqlResponse> {
 }
 
 const mainCountsForAllLexicalRelations =
-"SELECT ?l , ?maxversion, ?nym, ?count  \n" +
-  " WHERE{\n" +
-  " {\n" +
-  "      # Select the latest verison \n" +
-  "     SELECT distinct(?version) as ?maxversion\n" +
-  "    WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
-  "      ORDER BY DESC (?version) LIMIT 1
-  " }\n" +
-  "  ?o a qb:Observation;\n" +
-  "  qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
-  "  dbnary:observationLanguage ?l;\n" +
-  "  dbnary:wiktionaryDumpVersion ?maxversion;\n" +
-  "  dbnary:nymRelation ?nym;\n" +
-  "  dbnary:count ?count .\n" +
-  " }";
-
-
+    "SELECT ?l , ?maxversion, ?nym, ?count  \n" +
+    " WHERE{\n" +
+    " {\n" +
+    "      # Select the latest verison \n" +
+    "     SELECT distinct(?version) as ?maxversion\n" +
+    "    WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "      ORDER BY DESC (?version) LIMIT 1 \n" +
+    " }\n" +
+    "  ?o a qb:Observation;\n" +
+    "  qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
+    "  dbnary:observationLanguage ?l;\n" +
+    "  dbnary:wiktionaryDumpVersion ?maxversion;\n" +
+    "  dbnary:nymRelation ?nym;\n" +
+    "  dbnary:count ?count .\n" +
+    " }";
 
 export async function domainCountsForAllLexicalRelations(): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
@@ -130,14 +128,6 @@ export async function domainCountsForAllLexicalRelations(): Promise<SparqlRespon
         }
     });
 }
-
-
-
-
-
-
-
-
 
 // select ?lg, ?nbHomonyms where {
 //     {
@@ -155,9 +145,6 @@ export async function domainCountsForAllLexicalRelations(): Promise<SparqlRespon
 //     }
 // }
 // group by ?lg
-
-
-
 
 // SELECT ?Language
 

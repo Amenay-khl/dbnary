@@ -33,12 +33,3 @@ if (node2) {
         node2
     );
 }
-
-if (node3) {
-    render(
-        <RootStore.StoreProvider>
-            <NumberOfLexicalRelations />
-        </RootStore.StoreProvider>,
-        node3
-    );
-}

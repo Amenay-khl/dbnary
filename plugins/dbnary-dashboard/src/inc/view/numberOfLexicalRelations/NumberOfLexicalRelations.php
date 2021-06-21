@@ -15,7 +15,7 @@ defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file req
 class NumberOfLexicalRelations {
     use UtilsProvider;
  
-    const COMPONENT_ID = DBNARY_DASHBOARD_SLUG . '-numberOfLexicalRelations'; // attribute ID
+    const COMPONENT_ID = DBNARY_DASHBOARD_SLUG . '-numberOfLexicalRelations'; // attribute ID 
 
     /**
      * C'tor.
