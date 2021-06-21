@@ -119,8 +119,9 @@ const mainCountsForAllLexicalRelations =
     "  dbnary:nymRelation ?nym;\n" +
     "  dbnary:count ?count .\n" +
     " }";
+"GROUP BY ?l\n" + "ORDER BY ?l";
 
-export async function domainCountsForAllLexicalRelations(): Promise<SparqlResponse> {
+export async function doMainCountsForAllLexicalRelations(): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
@@ -129,68 +130,30 @@ export async function domainCountsForAllLexicalRelations(): Promise<SparqlRespon
     });
 }
 
-// select ?lg, ?nbHomonyms where {
-//     {
-//         select ?lg, count(distinct ?page) as ?nbHomonyms where {
-//             ?page dbnary:describes ?le .
-//             ?le dct:language ?lg .
-//             { SELECT distinct ?page , ?partOfSpeech where {
-//                 ?page dbnary:describes ?le1 ; dbnary:describes ?le2 .
-//                 ?le1 lexinfo:partOfSpeech ?partOfSpeech.
-//                 ?le2 lexinfo:partOfSpeech ?partOfSpeech.
-//                 FILTER (?le1 != ?le2)
-//                 }
-//             }
-//         } group by ?lg
-//     }
-// }
-// group by ?lg
+const mainCountsForAlltranslations =
+    "PREFIX lemon:<http://www.w3.org/ns/lemon/lime#>\n" +
+    "SELECT ?l , ?maxversion, ?Languages, ?count   WHERE{\n" +
+    "   {\n" +
+    "       # Select the latest verison \n" +
+    "       SELECT distinct(?version) as ?maxversion \n" +
+    "      WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "      ORDER BY DESC (?version) LIMIT 1 \n" +
+    "  } \n" +
+    "  ?o a qb:Observation; \n" +
+    "  qb:dataSet dbnstats:dbnaryTranslationsCube; \n" +
+    "  dbnary:observationLanguage ?l; \n" +
+    "  dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "  lemon:language ?Languages; \n" +
+    "  dbnary:count ?count . \n" +
+    "} \n" +
+    "GROUP BY ?l\n" +
+    "ORDER BY ?l";
 
-// SELECT ?Language
-
-// count(distinct ?num_syn) as ?syn
-
-// WHERE
-// {
-
-// ?obs
-// dct:language ?Language ;
-// dbnary:synonym ?num_syn .
-
-// }
-// GROUP BY ?Language
-// ORDER BY ?Language
-
-// "SELECT ?Language\n" +
-//     "    (sample(?maxversion) as ?Version)\n" +
-//     "    (sample(?num_syn) as ?syn)\n" +
-//     "    (sample(?num_qsyn) as ?qsyn)\n" +
-//     "    (sample(?num_ant) as ?ant)\n" +
-//     "    (sample(?num_hyper) as ?hyper)\n" +
-//     "    (sample(?num_hypo) as ?hypo)\n" +
-//     "    (sample(?num_mero) as ?mero)\n" +
-//     "    (sample(?num_holo) as ?holo)\n" +
-//     "    (sample(?num_tropo) as ?tropo)\n" +
-//     "WHERE\n" +
-//     "{\n" +
-//     "    {\n" +
-//     "     # Select the latest version\n" +
-//     "     SELECT distinct(?version) as ?maxversion\n" +
-//     "     WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
-//     "     ORDER BY DESC(?version) LIMIT 1\n" +
-//     "}\n" +
-//     "?obs\n" +
-//     "    qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
-//     "    dbnary:observationLanguage ?Language ;\n" +
-//     "    dbnary:synonym ?num_syn ;\n" +
-//     "    dbnary:approximateSynonym ?num_qsyn ;\n" +
-//     "    dbnary:antonym ?num_ant ;\n" +
-//     "    dbnary:hypernym ?num_hyper ;\n" +
-//     "    dbnary:hyponym ?num_hypo ;\n" +
-//     "    dbnary:meronym ?num_mero ;\n" +
-//     "    dbnary:holonym ?num_holo ;\n" +
-//     "    dbnary:troponym ?num_tropo ;\n" +
-//     "    dbnary:wiktionaryDumpVersion ?maxversion .\n" +
-//     "}\n" +
-//     "GROUP BY ?Language\n" +
-//     "ORDER BY ?Language";
+export async function doMainCountsForAlltranslations(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: mainCountsForAlltranslations
+        }
+    });
+}

@@ -2,7 +2,7 @@ import { colors, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import React, { Component, FC, useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { doMainCountsForAllLexicalRelations, SparqlResponse, TypedValue } from "../wp-api/sparql.get";
+import { doMainCountsForAlltranslations, SparqlResponse, TypedValue } from "../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
@@ -108,7 +108,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     const classes = useStyles();
 
     useEffect(() => {
-        doMainCountsForAllLexicalRelations().then(normalizeSparqlData).then(setData);
+        doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
     }, []);
 
     return (

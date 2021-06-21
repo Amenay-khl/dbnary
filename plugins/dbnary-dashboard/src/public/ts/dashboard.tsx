@@ -10,11 +10,13 @@ import { DbnaryDashboard } from "./dashboard/";
 import { RootStore } from "./store";
 import { NumberOfElements } from "./numberOfElements/";
 import { NumberOfLexicalRelations } from "./numberOfLexicalRelations/";
+import { NumberOfTranslations } from "./numberOfTranslations/";
 
 // Query DOM for the shortcod div (we assume the shortcode is used only once in a page).
 const node = document.getElementById(`${RootStore.get.optionStore.slug}-dashboard`);
 const node2 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfElements`);
 const node3 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfLexicalRelations`);
+const node4 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfTranslations`);
 
 // Iterate over the DOM nodes and render a React component into each node
 if (node) {
@@ -31,5 +33,23 @@ if (node2) {
             <NumberOfElements />
         </RootStore.StoreProvider>,
         node2
+    );
+}
+
+if (node3) {
+    render(
+        <RootStore.StoreProvider>
+            <NumberOfLexicalRelations />
+        </RootStore.StoreProvider>,
+        node3
+    );
+}
+
+if (node4) {
+    render(
+        <RootStore.StoreProvider>
+            <NumberOfTranslations />
+        </RootStore.StoreProvider>,
+        node4
     );
 }

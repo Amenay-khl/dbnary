@@ -48,7 +48,7 @@ class Core extends BaseCore {
         add_shortcode('dbdashboard', [Dashboard::instance(), 'shortcode']);
         add_shortcode('nbOfElements', [NumberOfElements::instance(), 'shortcode']);
         add_shortcode('nbOfLexicalRelation', [NumberOfLexicalRelations::instance(), 'shortcode']);
-
+        add_shortcode('nbOfTranslations', [NumberOfLexicalRelations::instance(), 'shortcode']);
 
     }
 
