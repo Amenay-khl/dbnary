@@ -7,6 +7,7 @@ import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import * as css from "./style.css";
+import BarGraph from "./BarChart";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -106,6 +107,12 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     const [isEntries, setIsEntries] = useState(true);
     const [isVocables, setIsVocables] = useState(true);
     const classes = useStyles();
+    let inputLabels = [
+        { key: "Vocables", color: decorations["vocable"].color },
+        { key: "Entries", color: decorations["entry"].color },
+        { key: "Senses", color: decorations["sense"].color },
+        { key: "Translations", color: decorations["translation"].color }
+    ];
 
     useEffect(() => {
         doMainCountsForAllLanguages().then(normalizeSparqlData).then(setData);
@@ -165,29 +172,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             </Grid>
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                        data={data}
-                        margin={{
-                            top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tick={<YAxisNumberTick />} />
-                        <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
-                        {isVocables ? <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} /> : ""}
-                        {isEntries ? <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} /> : ""}
-                        {isSenses ? <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} /> : ""}
-                        {isTranslations ? (
-                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
-                        ) : (
-                            ""
-                        )}
-                    </BarChart>
+                    <BarGraph title="test" data={data} labels={inputLabels} />
                 </ResponsiveContainer>
             </Grid>
         </Grid>

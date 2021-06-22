@@ -13,7 +13,7 @@ interface DecorationSpec {
 /* Decorations for cards */
 
 const decorations: Record<string, DecorationSpec> = {
-    page: { color: colors.red[600], avatarIcon: <MenuBookRoundedIcon />, title: "Pages" },
+    vocable: { color: colors.red[600], avatarIcon: <MenuBookRoundedIcon />, title: "Vocables" },
     entry: { color: colors.blue[600], avatarIcon: <ListRoundedIcon />, title: "Entries" },
     sense: { color: colors.green[600], avatarIcon: <EmojiObjectsRoundedIcon />, title: "Lexical Senses" },
     translation: { color: colors.yellow[600], avatarIcon: <TranslateRoundedIcon />, title: "Translations" }
