@@ -2,7 +2,12 @@ import { colors, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import React, { Component, FC, useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { doMainCountsForAlltranslations, SparqlResponse, TypedValue } from "../wp-api/sparql.get";
+import {
+    doMainCountsForAllLexicalRelations,
+    doMainCountsForAlltranslations,
+    SparqlResponse,
+    TypedValue
+} from "../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
@@ -103,13 +108,33 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
+// function transpose(data: Record<string, any>[]) {
+//     let result = [];
+//     for (let row of data) {
+//         for (let [key, value] of Object.entries(row)) {
+//             result[key] = result[key] || [];
+//             result[key].push(value);
+//         }
+//     }
+//     return result;
+// }
+
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
-    const [data, setData] = useState<Array<Record<string, any>>>(null);
+    const [data, setData] = useState<Array<Record<string, any>>>([
+        {
+            l: "es",
+            maxversion: "20210620",
+            nym: "http://kaiko.getalp.org/dbnary#antonym",
+            count: "2827"
+        }
+    ]);
     const classes = useStyles();
 
     useEffect(() => {
         doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
     }, []);
+
+    console.log(data);
 
     return (
         <Grid
