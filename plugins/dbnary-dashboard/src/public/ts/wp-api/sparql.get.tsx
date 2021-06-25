@@ -158,34 +158,32 @@ export async function doMainCountsForAlltranslations(): Promise<SparqlResponse> 
     });
 }
 
-const numberOfElementsForFr =     
-"SELECT ?Language,\n" +
-"?maxversion as ?Version,\n" +
-"?num_entries as ?Entries,\n" +
-"?num_pages as ?Vocables,\n" +
-"?num_senses as ?Senses,\n" +
-"?num_translations as ?Translations\n" +
-"WHERE\n" +
-"{\n" +
-
-"?obs\n" +
-"qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
-"dbnary:observationLanguage ?Language ;\n" +
-"dbnary:lexicalEntryCount ?num_entries ;\n" +
-"dbnary:pageCount ?num_pages ;\n" +
-"dbnary:lexicalSenseCount ?num_senses ;\n" +
-"dbnary:translationsCount ?num_translations ;\n" +
-"dbnary:wiktionaryDumpVersion ?maxversion .\n" +
-"filter(?Language="fr")\n" +
-"}\n" +
-"ORDER BY ?maxversion";
-
+const numberOfElementsForFr =
+    "SELECT ?Language,\n" +
+    "?maxversion as ?Version,\n" +
+    "?num_entries as ?Entries,\n" +
+    "?num_pages as ?Vocables,\n" +
+    "?num_senses as ?Senses,\n" +
+    "?num_translations as ?Translations\n" +
+    "WHERE\n" +
+    "{\n" +
+    "?obs\n" +
+    "qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    "dbnary:observationLanguage ?Language ;\n" +
+    "dbnary:lexicalEntryCount ?num_entries ;\n" +
+    "dbnary:pageCount ?num_pages ;\n" +
+    "dbnary:lexicalSenseCount ?num_senses ;\n" +
+    "dbnary:translationsCount ?num_translations ;\n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion .\n" +
+    "filter(?Language='fr')\n" +
+    "}\n" +
+    "ORDER BY ?maxversion";
 
 export async function donumberOfElementsForFr(): Promise<SparqlResponse> {
-  return await request<SparqlRequest, SparqlParams, SparqlResponse>({
-      location: sparqlGetLocation,
-      params: {
-          query: numberOfElementsForFr
-      }
-  });
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOfElementsForFr
+        }
+    });
 }
