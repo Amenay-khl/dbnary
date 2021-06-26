@@ -103,25 +103,29 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-function transpose(data: Record<string, any>[]) {
-    let result = [];
-    for (let row of data) {
-        for (let [key, value] of Object.entries(row)) {
-            result[key] = result[key] || [];
-            result[key].push(value);
-        }
-    }
-    return result;
+function groupBy(data, keyname) {
+    let result = {};
+    data.forEach((item) => {
+        const key = item[keyname];
+        result[key] = [...(result[key] || []), item];
+    });
+    return Object.values(result);
+}
+
+function pivot(data) {
+    return data.reduce(
+        (accumulator, { nym, count, ...rest }) => ({
+            ...accumulator,
+            ...rest,
+            [nym.split("#")[1]]: count
+        }),
+        []
+    );
 }
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
-        {
-            l: "es",
-            maxversion: "20210620",
-            nym: "http://kaiko.getalp.org/dbnary#antonym",
-            count: "2827"
-        }
+        { l: "es", maxversion: "20210620", nym: "http://kaiko.getalp.org/dbnary#antonym", count: "2827" }
     ]);
     const classes = useStyles();
 
@@ -129,9 +133,10 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         doMainCountsForAllLexicalRelations().then(normalizeSparqlData).then(setData);
     }, []);
 
-    console.log(data);
+    const result = groupBy(data, "l").map(pivot);
+    console.log(result);
 
-    console.log(transpose(data));
+    console.log(data);
 
     return (
         <Grid
@@ -147,7 +152,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart
-                        data={data}
+                        data={result}
                         margin={{
                             top: 20,
                             right: 30,
@@ -156,11 +161,14 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
+                        <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
-                        <Bar dataKey="count" stackId="a" fill={decorations["page"].color} />
+                        <Bar dataKey="antonym" stackId="a" fill={decorations["translation"].color} />
+                        <Bar dataKey="approximateSynonym" stackId="a" fill={decorations["sense"].color} />
+                        <Bar dataKey="holonym" stackId="a" fill={decorations["entry"].color} />
+                        <Bar dataKey="hypernym" stackId="a" fill={decorations["page"].color} />
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>

@@ -134,8 +134,6 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
     }, []);
 
-    console.log(data);
-
     return (
         <Grid
             container
