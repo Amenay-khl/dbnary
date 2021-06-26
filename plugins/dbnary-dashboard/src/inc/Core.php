@@ -9,7 +9,7 @@ use GillesSerasset\DbnaryDashboard\view\widget\Widget;
 use GillesSerasset\DbnaryDashboard\view\numberOfElements\NumberOfElements;
 use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelations\NumberOfLexicalRelations;
 use  GillesSerasset\DbnaryDashboard\view\numberOfTranslations\NumberOfTranslations;
-
+use  GillesSerasset\DbnaryDashboard\view\numberOfElementsByLanguage\numberOfElementsForFr\NumberOfElementsForFr;
 
 // @codeCoverageIgnoreStart
 defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file request
@@ -50,6 +50,7 @@ class Core extends BaseCore {
         add_shortcode('nbOfElements', [NumberOfElements::instance(), 'shortcode']);
         add_shortcode('nbOfLexicalRelation', [NumberOfLexicalRelations::instance(), 'shortcode']);
         add_shortcode('nbOfTranslations', [NumberOfTranslations::instance(), 'shortcode']);
+        add_shortcode('nbOfElementsForFr', [NumberOfElementsForFr::instance(), 'shortcode']);
 
     }
 
