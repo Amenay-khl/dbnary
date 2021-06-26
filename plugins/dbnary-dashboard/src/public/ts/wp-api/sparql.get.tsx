@@ -187,3 +187,24 @@ export async function donumberOfElementsForFr(): Promise<SparqlResponse> {
         }
     });
 }
+
+const numberOfLexicalRelationsForFr =
+    "SELECT ?l , ?maxversion, ?nym, ?count  \n" +
+    "WHERE{\n" +
+    "?o a qb:Observation;\n" +
+    "qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
+    "dbnary:observationLanguage ?l;\n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion;\n" +
+    "dbnary:nymRelation ?nym;\n" +
+    "dbnary:count ?count .\n" +
+    "filter(?l='fr')     }\n" +
+    "ORDER BY ?maxversion";
+
+export async function doNumberOfLexicalRelationsForFr(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOfLexicalRelationsForFr
+        }
+    });
+}

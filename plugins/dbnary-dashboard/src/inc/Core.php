@@ -10,7 +10,7 @@ use GillesSerasset\DbnaryDashboard\view\numberOfElements\NumberOfElements;
 use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelations\NumberOfLexicalRelations;
 use  GillesSerasset\DbnaryDashboard\view\numberOfTranslations\NumberOfTranslations;
 use  GillesSerasset\DbnaryDashboard\view\numberOfElementsByLanguage\numberOfElementsForFr\NumberOfElementsForFr;
-
+use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelationsByLanguage\numberOfLexicalRelationsForFr\NumberOfLexicalRelationsForFr; 
 // @codeCoverageIgnoreStart
 defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file request
 // @codeCoverageIgnoreEnd
@@ -51,6 +51,7 @@ class Core extends BaseCore {
         add_shortcode('nbOfLexicalRelation', [NumberOfLexicalRelations::instance(), 'shortcode']);
         add_shortcode('nbOfTranslations', [NumberOfTranslations::instance(), 'shortcode']);
         add_shortcode('nbOfElementsForFr', [NumberOfElementsForFr::instance(), 'shortcode']);
+        add_shortcode('nbOfLexicalRelationForFr', [NumberOfLexicalRelationsForFr::instance(), 'shortcode']);
 
     }
 

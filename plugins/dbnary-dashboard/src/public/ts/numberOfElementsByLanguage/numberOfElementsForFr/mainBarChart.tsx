@@ -163,21 +163,21 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <Area
                             type="monotone"
                             dataKey="Entries"
-                            stackId="2"
+                            stackId="1"
                             stroke={decorations["page"].color}
                             fill={decorations["page"].color}
                         />
                         <Area
                             type="monotone"
                             dataKey="Senses"
-                            stackId="3"
+                            stackId="1"
                             stroke={decorations["sense"].color}
                             fill={decorations["sense"].color}
                         />
                         <Area
                             type="monotone"
                             dataKey="Translations"
-                            stackId="4"
+                            stackId="1"
                             stroke={decorations["entry"].color}
                             fill={decorations["entry"].color}
                         />
