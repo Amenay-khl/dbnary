@@ -165,10 +165,13 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
-                        <Bar dataKey="antonym" stackId="a" fill={decorations["translation"].color} />
-                        <Bar dataKey="approximateSynonym" stackId="a" fill={decorations["sense"].color} />
-                        <Bar dataKey="holonym" stackId="a" fill={decorations["entry"].color} />
-                        <Bar dataKey="hypernym" stackId="a" fill={decorations["page"].color} />
+                        <Bar dataKey="antonym" stackId="a" fill="#777b27" />
+                        <Bar dataKey="approximateSynonym" stackId="a" fill="#c8c6ed" />
+                        <Bar dataKey="holonym" stackId="a" fill="#ff00ff" />
+                        <Bar dataKey="hypernym" stackId="a" fill="#000080" />
+                        <Bar dataKey="hyponym" stackId="a" fill="fdff00" />
+                        <Bar dataKey="meronym" stackId="a" fill="#3ab09e" />
+                        <Bar dataKey="synonym" stackId="a" fill="##ff4f00" />
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>
