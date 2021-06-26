@@ -108,16 +108,25 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-// function transpose(data: Record<string, any>[]) {
-//     let result = [];
-//     for (let row of data) {
-//         for (let [key, value] of Object.entries(row)) {
-//             result[key] = result[key] || [];
-//             result[key].push(value);
-//         }
-//     }
-//     return result;
-// }
+function groupBy(data, keyname) {
+    let result = {};
+    data.forEach((item) => {
+        const key = item[keyname];
+        result[key] = [...(result[key] || []), item];
+    });
+    return Object.values(result);
+}
+
+function pivot(data) {
+    return data.reduce(
+        (accumulator, { Languages, count, ...rest }) => ({
+            ...accumulator,
+            ...rest,
+            [Languages]: count
+        }),
+        []
+    );
+}
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
@@ -134,6 +143,11 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
     }, []);
 
+    const result = groupBy(data, "l").map(pivot);
+
+    console.log(data);
+    console.log(result);
+
     return (
         <Grid
             container
@@ -148,7 +162,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart
-                        data={data}
+                        data={result}
                         margin={{
                             top: 20,
                             right: 30,
@@ -157,11 +171,24 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
+                        <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
-                        <Bar dataKey="count" stackId="a" fill={decorations["page"].color} />
+                        <Bar dataKey="de" stackId="a" fill="#7B241C" />
+                        <Bar dataKey="el" stackId="a" fill="#ff4f00 " />
+                        <Bar dataKey="en" stackId="a" fill="#C39BD3" />
+                        <Bar dataKey="fi" stackId="a" fill="#5B2C6F " />
+                        <Bar dataKey="fr" stackId="a" fill="#2471A3" />
+                        <Bar dataKey="it" stackId="a" fill="#85C1E9" />
+                        <Bar dataKey="id" stackId="a" fill="#48C9B0" />
+                        <Bar dataKey="ja" stackId="a" fill="#229954" />
+                        <Bar dataKey="mul" stackId="a" fill="#F9E79F" />
+                        <Bar dataKey="number_of_languages:" stackId="a" fill="#B3B6B7" />
+                        <Bar dataKey="others:" stackId="a" fill="#F39C12" />
+                        <Bar dataKey="pt" stackId="a" fill="#fdff00" />
+                        <Bar dataKey="ru" stackId="a" fill="#34495E " />
+                        <Bar dataKey="tr" stackId="a" fill="#ff00ff" />
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>

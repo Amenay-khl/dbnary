@@ -134,9 +134,6 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     }, []);
 
     const result = groupBy(data, "l").map(pivot);
-    console.log(result);
-
-    console.log(data);
 
     return (
         <Grid
