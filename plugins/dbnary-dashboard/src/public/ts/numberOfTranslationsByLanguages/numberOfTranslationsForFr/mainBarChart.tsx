@@ -1,16 +1,28 @@
 import { colors, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import React, { Component, FC, useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    AreaChart,
+    Area
+} from "recharts";
 import {
     doMainCountsForAllLexicalRelations,
-    doMainCountsForAlltranslations,
+    doNumberOfLexicalRelationsForFr,
+    doNumberOftranslationsForFr,
     SparqlResponse,
     TypedValue
-} from "../wp-api/sparql.get";
+} from "../../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
-import { getEnglishName } from "../utils/iso636_1";
+import { getEnglishName } from "../../utils/iso636_1";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -130,22 +142,17 @@ function pivot(data) {
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
-        {
-            l: "bg",
-            maxversion: "20210620",
-            Languages: "it",
-            count: "1202"
-        }
+        { l: "bg", maxversion: "20210620", Languages: "it", count: "1202" }
     ]);
     const classes = useStyles();
 
     useEffect(() => {
-        doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
+        doNumberOftranslationsForFr().then(normalizeSparqlData).then(setData);
     }, []);
 
-    const result = groupBy(data, "l").map(pivot);
-
+    const result = groupBy(data, "maxversion").map(pivot);
     console.log(data);
+
     console.log(result);
 
     return (
@@ -161,35 +168,45 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         >
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
+                    <AreaChart
+                        width={500}
+                        height={200}
                         data={result}
+                        syncId="anyId"
                         margin={{
-                            top: 20,
+                            top: 10,
                             right: 30,
-                            left: 20,
-                            bottom: 5
+                            left: 0,
+                            bottom: 0
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
+                        <XAxis dataKey="" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
                         <Legend />
-                        <Bar dataKey="de" stackId="a" fill="#7B241C" />
-                        <Bar dataKey="el" stackId="a" fill="#ff4f00 " />
-                        <Bar dataKey="en" stackId="a" fill="#C39BD3" />
-                        <Bar dataKey="fi" stackId="a" fill="#5B2C6F " />
-                        <Bar dataKey="fr" stackId="a" fill="#2471A3" />
-                        <Bar dataKey="it" stackId="a" fill="#85C1E9" />
-                        <Bar dataKey="id" stackId="a" fill="#48C9B0" />
-                        <Bar dataKey="ja" stackId="a" fill="#229954" />
-                        <Bar dataKey="mul" stackId="a" fill="#F9E79F" />
-                        <Bar dataKey="number_of_languages:" stackId="a" fill="#B3B6B7" />
-                        <Bar dataKey="others:" stackId="a" fill="#F39C12" />
-                        <Bar dataKey="pt" stackId="a" fill="#fdff00" />
-                        <Bar dataKey="ru" stackId="a" fill="#34495E " />
-                        <Bar dataKey="tr" stackId="a" fill="#ff00ff" />
-                    </BarChart>
+
+                        <Area type="monotone" dataKey="de" stackId="1" fill="#7B241C" stroke="#7B241C" />
+                        <Area type="monotone" dataKey="el" stackId="1" fill="#ff4f00 " stroke="#ff4f00" />
+                        <Area type="monotone" dataKey="en" stackId="1" fill="#C39BD3" stroke="#C39BD3" />
+                        <Area type="monotone" dataKey="fi" stackId="1" fill="#5B2C6F " stroke="#5B2C6F" />
+                        <Area type="monotone" dataKey="fr" stackId="1" fill="#2471A3" stroke="#2471A3" />
+                        <Area type="monotone" dataKey="it" stackId="1" fill="#85C1E9" stroke="#85C1E9" />
+                        <Area type="monotone" dataKey="id" stackId="1" fill="#48C9B0" stroke="#48C9B0" />
+                        <Area type="monotone" dataKey="ja" stackId="1" fill="#229954" stroke="#229954" />
+                        <Area type="monotone" dataKey="mul" stackId="1" fill="#F9E79F" stroke="#F9E79F" />
+                        <Area
+                            type="monotone"
+                            dataKey="number_of_languages:"
+                            stackId="1"
+                            fill="#B3B6B7"
+                            stroke="#B3B6B7"
+                        />
+                        <Area type="monotone" dataKey="others:" stackId="1" fill="#F39C12" stroke="#F39C12" />
+                        <Area type="monotone" dataKey="pt" stackId="1" fill="#fdff00" stroke="#fdff00" />
+                        <Area type="monotone" dataKey="ru" stackId="1" fill="#34495E " stroke="#34495E" />
+                        <Area type="monotone" dataKey="tr" stackId="1" fill="#ff00ff" stroke="#ff00ff" />
+                    </AreaChart>
                 </ResponsiveContainer>
             </Grid>
         </Grid>

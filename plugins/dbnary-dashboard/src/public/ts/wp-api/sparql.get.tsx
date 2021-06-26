@@ -208,3 +208,25 @@ export async function doNumberOfLexicalRelationsForFr(): Promise<SparqlResponse>
         }
     });
 }
+
+const numberOftranslationsForFr =
+    "PREFIX lemon:<http://www.w3.org/ns/lemon/lime#>\n" +
+    "SELECT ?l , ?maxversion, ?Languages, ?count   WHERE{\n" +
+    "?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:dbnaryTranslationsCube; \n" +
+    "dbnary:observationLanguage ?l; \n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "lemon:language ?Languages; \n" +
+    "dbnary:count ?count . \n" +
+    "filter(?l='fr').\n" +
+    "} \n" +
+    "ORDER BY ?maxversion";
+
+export async function doNumberOftranslationsForFr(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOftranslationsForFr
+        }
+    });
+}
