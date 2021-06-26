@@ -169,9 +169,9 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <Bar dataKey="approximateSynonym" stackId="a" fill="#c8c6ed" />
                         <Bar dataKey="holonym" stackId="a" fill="#ff00ff" />
                         <Bar dataKey="hypernym" stackId="a" fill="#000080" />
-                        <Bar dataKey="hyponym" stackId="a" fill="fdff00" />
+                        <Bar dataKey="hyponym" stackId="a" fill="#ff4f00" />
                         <Bar dataKey="meronym" stackId="a" fill="#3ab09e" />
-                        <Bar dataKey="synonym" stackId="a" fill="##ff4f00" />
+                        <Bar dataKey="synonym" stackId="a" fill="#fdff00" />
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>
