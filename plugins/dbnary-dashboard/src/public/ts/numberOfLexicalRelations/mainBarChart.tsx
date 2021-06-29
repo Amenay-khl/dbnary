@@ -6,7 +6,7 @@ import { doMainCountsForAllLexicalRelations, SparqlResponse, TypedValue } from "
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
-
+import BarGraph from "./barGraph";
 function valueAsString(val: TypedValue): string {
     return val.value;
 }
@@ -128,6 +128,15 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         { l: "es", maxversion: "20210620", nym: "http://kaiko.getalp.org/dbnary#antonym", count: "2827" }
     ]);
     const classes = useStyles();
+    let inputLabels = [
+        { key: "synonym", color: "#fdff00" },
+        { key: "meronym", color: "#3ab09e" },
+        { key: "hyponym", color: "#ff4f00" },
+        { key: "hypernym", color: "#000080" },
+        { key: "holonym", color: "#ff00ff" },
+        { key: "antonym", color: "#c8c6ed" },
+        { key: "approximateSynonym", color: "#777b27" }
+    ];
 
     useEffect(() => {
         doMainCountsForAllLexicalRelations().then(normalizeSparqlData).then(setData);
@@ -148,7 +157,8 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         >
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
+                    <BarGraph title="test" data={result} labels={inputLabels} />
+                    {/* <BarChart
                         data={result}
                         margin={{
                             top: 20,
@@ -169,7 +179,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <Bar dataKey="hyponym" stackId="a" fill="#ff4f00" />
                         <Bar dataKey="meronym" stackId="a" fill="#3ab09e" />
                         <Bar dataKey="synonym" stackId="a" fill="#fdff00" />
-                    </BarChart>
+                    </BarChart> */}
                 </ResponsiveContainer>
             </Grid>
         </Grid>
