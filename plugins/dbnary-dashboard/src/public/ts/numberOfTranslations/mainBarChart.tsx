@@ -11,6 +11,7 @@ import {
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
+import BarGraph from "./barGraph";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -68,42 +69,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const XAxisLanguageTick: FC<any> = ({ x, y, payload }) => {
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text
-                x={0}
-                y={0}
-                dy={12}
-                textAnchor="middle"
-                fill="#666"
-                fontSize="0.7rem"
-                fontFamily="Roboto, sans-serif, Helvetica, Arial"
-            >
-                {payload.value}
-            </text>
-        </g>
-    );
-};
-
-const YAxisNumberTick: FC<any> = (props) => {
-    const { x, y, payload } = props;
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text
-                x={0}
-                y={0}
-                textAnchor="end"
-                fill="#666"
-                fontSize="0.7rem"
-                fontFamily="Roboto, sans-serif, Helvetica, Arial"
-            >
-                {kbTickFormat(payload.value)}
-            </text>
-        </g>
-    );
-};
-
 const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
@@ -138,6 +103,22 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         }
     ]);
     const classes = useStyles();
+    let inputLabels = [
+        { key: "tr", color: "#ff00ff" },
+        { key: "ru", color: "#34495E" },
+        { key: "pt", color: "#fdff00" },
+        { key: "others", color: "#F39C12" },
+        { key: "number_of_languages", color: "#B3B6B7" },
+        { key: "mul", color: "#229954" },
+        { key: "ja", color: "#F9E79F" },
+        { key: "id", color: "#48C9B0" },
+        { key: "it", color: "#85C1E9" },
+        { key: "fr", color: "#2471A3" },
+        { key: "fi", color: "#5B2C6F" },
+        { key: "en", color: "#C39BD3" },
+        { key: "de", color: "#ff4f00" },
+        { key: "el", color: "#7B241C" }
+    ];
 
     useEffect(() => {
         doMainCountsForAlltranslations().then(normalizeSparqlData).then(setData);
@@ -161,7 +142,9 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         >
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
+                    <BarGraph title="test" data={result} labels={inputLabels} />
+
+                    {/* <BarChart
                         data={result}
                         margin={{
                             top: 20,
@@ -189,7 +172,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <Bar dataKey="pt" stackId="a" fill="#fdff00" />
                         <Bar dataKey="ru" stackId="a" fill="#34495E " />
                         <Bar dataKey="tr" stackId="a" fill="#ff00ff" />
-                    </BarChart>
+                    </BarChart> */}
                 </ResponsiveContainer>
             </Grid>
         </Grid>

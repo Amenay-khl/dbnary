@@ -1,7 +1,7 @@
 import { colors, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import React, { Component, FC, useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { ResponsiveContainer } from "recharts";
 import { doMainCountsForAllLexicalRelations, SparqlResponse, TypedValue } from "../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
@@ -63,42 +63,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const XAxisLanguageTick: FC<any> = ({ x, y, payload }) => {
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text
-                x={0}
-                y={0}
-                dy={12}
-                textAnchor="middle"
-                fill="#666"
-                fontSize="0.7rem"
-                fontFamily="Roboto, sans-serif, Helvetica, Arial"
-            >
-                {payload.value}
-            </text>
-        </g>
-    );
-};
-
-const YAxisNumberTick: FC<any> = (props) => {
-    const { x, y, payload } = props;
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text
-                x={0}
-                y={0}
-                textAnchor="end"
-                fill="#666"
-                fontSize="0.7rem"
-                fontFamily="Roboto, sans-serif, Helvetica, Arial"
-            >
-                {kbTickFormat(payload.value)}
-            </text>
-        </g>
-    );
-};
-
 const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
@@ -158,28 +122,6 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarGraph title="test" data={result} labels={inputLabels} />
-                    {/* <BarChart
-                        data={result}
-                        margin={{
-                            top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tick={<YAxisNumberTick />} />
-                        <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
-                        <Bar dataKey="antonym" stackId="a" fill="#777b27" />
-                        <Bar dataKey="approximateSynonym" stackId="a" fill="#c8c6ed" />
-                        <Bar dataKey="holonym" stackId="a" fill="#ff00ff" />
-                        <Bar dataKey="hypernym" stackId="a" fill="#000080" />
-                        <Bar dataKey="hyponym" stackId="a" fill="#ff4f00" />
-                        <Bar dataKey="meronym" stackId="a" fill="#3ab09e" />
-                        <Bar dataKey="synonym" stackId="a" fill="#fdff00" />
-                    </BarChart> */}
                 </ResponsiveContainer>
             </Grid>
         </Grid>
