@@ -6,6 +6,8 @@ use GillesSerasset\DbnaryDashboard\rest\SparqlRoute;
 use GillesSerasset\DbnaryDashboard\view\menu\Page;
 use GillesSerasset\DbnaryDashboard\view\dashboard\Dashboard;
 use GillesSerasset\DbnaryDashboard\view\widget\Widget;
+use GillesSerasset\DbnaryDashboard\view\numberOfElements\NumberOfElements;
+
 
 // @codeCoverageIgnoreStart
 defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file request
@@ -43,6 +45,8 @@ class Core extends BaseCore {
         add_action('wp_enqueue_scripts', [$this->getAssets(), 'wp_enqueue_scripts']);
         add_action('admin_menu', [Page::instance(), 'admin_menu']);
         add_shortcode('dbdashboard', [Dashboard::instance(), 'shortcode']);
+        add_shortcode('nbOfElements', [NumberOfElements::instance(), 'shortcode']);
+
     }
 
     /**
