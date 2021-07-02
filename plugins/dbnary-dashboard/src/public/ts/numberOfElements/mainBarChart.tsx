@@ -121,49 +121,6 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid>
-                <form>
-                    <div className="checkboxes">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isTranslations}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsTranslations(!isTranslations)}
-                            />
-                            <span>Translations</span>
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isSenses}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsSenses(!isSenses)}
-                            />
-                            <span>Senses</span>
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isEntries}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsEntries(!isEntries)}
-                            />
-                            <span>Entries</span>
-                        </label>
-
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isVocables}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsVocables(!isVocables)}
-                            />
-                            <span>Vocables</span>
-                        </label>
-                    </div>
-                </form>
-            </Grid>
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart

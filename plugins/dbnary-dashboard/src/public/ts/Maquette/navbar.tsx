@@ -6,7 +6,16 @@ export default function Navbar() {
         <div>
             <div className="contBtn">
                 <div className="Onglet">General</div>
-                <div className="Onglet">fr</div>
+                <div className="Onglet">fra</div>
+                <div className="Onglet">eng</div>
+                <div className="Onglet">deu</div>
+                <div className="Onglet">ell</div>
+                <div className="Onglet">fin</div>
+                <div className="Onglet">jpn</div>
+                <div className="Onglet">ita</div>
+                <div className="Onglet">por</div>
+                <div className="Onglet">rus</div>
+                <div className="Onglet">tur</div>
             </div>
         </div>
     );
