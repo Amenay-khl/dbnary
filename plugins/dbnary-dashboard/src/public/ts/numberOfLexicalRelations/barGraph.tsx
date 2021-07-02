@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Label } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Label, ResponsiveContainer } from "recharts";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import { DecorationSpec } from "./styles";
@@ -77,23 +77,24 @@ const BarGraph = ({ title, data, labels }) => {
 
     return (
         <div>
-            <h3>{title}</h3>
-            <BarChart width={600} height={300} data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
-                <YAxis type="number" tick={<YAxisNumberTick />} />
-                <Tooltip labelFormatter={langNameFormatter} />
-                <Legend onClick={selectBar} />
-                {labels.map((label) => (
-                    <Bar
-                        key={label.key}
-                        dataKey={label.key}
-                        fill={label.color}
-                        stackId={"a"}
-                        hide={barProps[label.key] === true}
-                        fillOpacity={Number(barProps.hover === label.key || !barProps.hover ? 1 : 0.6)}
-                    />
-                ))}
-            </BarChart>
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart width={600} height={300} data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
+                    <YAxis type="number" tick={<YAxisNumberTick />} />
+                    <Tooltip labelFormatter={langNameFormatter} />
+                    <Legend onClick={selectBar} />
+                    {labels.map((label) => (
+                        <Bar
+                            key={label.key}
+                            dataKey={label.key}
+                            fill={label.color}
+                            stackId={"a"}
+                            hide={barProps[label.key] === true}
+                            fillOpacity={Number(barProps.hover === label.key || !barProps.hover ? 1 : 0.6)}
+                        />
+                    ))}
+                </BarChart>
+            </ResponsiveContainer>
         </div>
     );
 };
