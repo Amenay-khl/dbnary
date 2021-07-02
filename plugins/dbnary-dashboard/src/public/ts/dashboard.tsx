@@ -14,7 +14,7 @@ import { NumberOfTranslations } from "./numberOfTranslations/";
 import { NumberOfElementsForFr } from "./numberOfElementsByLanguage/numberOfElementsForFr/";
 import { NumberOfLexicalRelationsForFr } from "./numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
 import { NumberOfTranslationsForFr } from "./numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
-
+import { Maquette } from "./Maquette/";
 // Query DOM for the shortcod div (we assume the shortcode is used only once in a page).
 const node = document.getElementById(`${RootStore.get.optionStore.slug}-dashboard`);
 const node2 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfElements`);
@@ -23,6 +23,7 @@ const node4 = document.getElementById(`${RootStore.get.optionStore.slug}-numberO
 const node5 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfElementsForFr`);
 const node6 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfLexicalRelationsForFr`);
 const node7 = document.getElementById(`${RootStore.get.optionStore.slug}-numberOfTranslationsForFr`);
+const node8 = document.getElementById(`${RootStore.get.optionStore.slug}-maquette`);
 
 // Iterate over the DOM nodes and render a React component into each node
 if (node) {
@@ -84,5 +85,13 @@ if (node7) {
             <NumberOfTranslationsForFr />
         </RootStore.StoreProvider>,
         node7
+    );
+}
+if (node8) {
+    render(
+        <RootStore.StoreProvider>
+            <Maquette />
+        </RootStore.StoreProvider>,
+        node8
     );
 }
