@@ -8,9 +8,8 @@ import Navbar from "./navbar";
 const Maquette: FC<{}> = () => {
     return (
         <div className="wp-styleguide">
-            <Navbar />
             <StatsLine decorations={decorations} />
-            <MainBarChart />
+            <Navbar />
         </div>
     );
 };

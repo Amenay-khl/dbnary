@@ -3,7 +3,6 @@ import { NumberOfElements } from "../numberOfElements";
 import { NumberOfLexicalRelations } from "../numberOfLexicalRelations/";
 import { NumberOfTranslations } from "../numberOfTranslations";
 
-import "@material-tailwind/react/tailwind.css";
 /* The decorations to provide to the generic barchart */
 
 const MainBarChart: FC<any> = () => {
