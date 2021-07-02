@@ -28,7 +28,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired
 };
 
-function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any>> {
+/*function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any>> {
     const result: Array<Record<string, any>> = [];
     // console.log("Normalizing data");
     // console.log(response.results.bindings);
@@ -44,7 +44,7 @@ function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any
     }
     // console.log(result);
     return result;
-}
+}*/
 
 function a11yProps(index) {
     return {
