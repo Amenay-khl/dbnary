@@ -95,9 +95,11 @@ export default function Navbar() {
                     variant="scrollable"
                     scrollButtons="auto"
                 >
-                    {data.map((label, index) => (
-                        <Tab label={label.Language} {...a11yProps(index)} />
-                    ))}
+                    <Tab label="General" {...a11yProps(0)} />
+                    {data.map((label, index) => {
+                        x += 1;
+                        return <Tab label={label.Language} {...a11yProps(x)} />;
+                    })}
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
