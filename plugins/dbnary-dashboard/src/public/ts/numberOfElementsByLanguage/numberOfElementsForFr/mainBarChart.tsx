@@ -16,7 +16,7 @@ import {
 } from "recharts";
 import {
     doMainCountsForAllLanguages,
-    donumberOfElementsForFr,
+    donumberOfElementsByLanguage,
     SparqlResponse,
     TypedValue
 } from "../../wp-api/sparql.get";
@@ -33,7 +33,11 @@ function valueAsInt(val: TypedValue): number {
 }
 
 /* The decorations to provide to the generic barchart */
-type MainBarChartProps = { decorations: Record<string, DecorationSpec>; provider: () => Promise<SparqlResponse> };
+type MainBarChartProps = {
+    decorations: Record<string, DecorationSpec>;
+    provider: () => Promise<SparqlResponse>;
+    langue: String;
+};
 
 const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
@@ -115,12 +119,13 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, langue, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const classes = useStyles();
-
+    console.log("langue2 :");
+    console.log(langue);
     useEffect(() => {
-        donumberOfElementsForFr().then(normalizeSparqlData).then(setData);
+        donumberOfElementsByLanguage(langue).then(normalizeSparqlData).then(setData);
     }, []);
     console.log(data);
     return (
