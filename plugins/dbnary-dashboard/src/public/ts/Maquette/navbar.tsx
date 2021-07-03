@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MainBarChart } from "./mainBarChart";
 import { NumberOfElements } from "../numberOfElements";
+import { doAllLanguagesForNavBar, doNumberOfLexicalRelationsForFr, SparqlResponse, TypedValue } from "../wp-api";
+import { LensTwoTone } from "@material-ui/icons";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -27,8 +29,13 @@ TabPanel.propTypes = {
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired
 };
-
-/*function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any>> {
+function valueAsString(val: TypedValue): string {
+    return val.value;
+}
+const types: Record<string, (tval: TypedValue) => any> = {
+    Language: valueAsString
+};
+function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any>> {
     const result: Array<Record<string, any>> = [];
     // console.log("Normalizing data");
     // console.log(response.results.bindings);
@@ -42,9 +49,10 @@ TabPanel.propTypes = {
             result.push(resultRec);
         });
     }
-    // console.log(result);
+    console.log("results");
+    console.log(result);
     return result;
-}*/
+}
 
 function a11yProps(index) {
     return {
@@ -62,33 +70,40 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    //  const [data, setData] = useState<Array<Record<string, any>>>(null);
+    const [data, setData] = useState<Array<Record<string, any>>>([{ Language: "bg" }]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    /*  useEffect(() => {
-        doMainCountsForAllLanguages().then(normalizeSparqlData).then(setData);
-    }, []);*/
-
+    useEffect(() => {
+        doAllLanguagesForNavBar().then(normalizeSparqlData).then(setData);
+    }, []);
+    console.log("data :");
+    console.log(data);
+    let x = 1;
     return (
         <div>
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="General" {...a11yProps(0)} />
-                    <Tab label="fra" {...a11yProps(1)} />
-                    <Tab label="eng" {...a11yProps(2)} />
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="simple tabs example"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                >
+                    {data.map((label, index) => (
+                        <Tab label={label.Language} {...a11yProps(index)} />
+                    ))}
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
                 <MainBarChart />
             </TabPanel>
-            <TabPanel value={value} index={1}>
-                <NumberOfElements />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                içi en
-            </TabPanel>
+            {data.map((label, index) => (
+                <TabPanel value={value} index={index}>
+                    <div>{label.Language}</div>
+                </TabPanel>
+            ))}
         </div>
     );
 }
