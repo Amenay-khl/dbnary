@@ -6,6 +6,7 @@ import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-a
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
+import BarGraph from "./barGraph";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -106,6 +107,13 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     const [isVocables, setIsVocables] = useState(true);
     const classes = useStyles();
 
+    let inputLabels = [
+        { key: "Vocables", color: "#fdff00" },
+        { key: "Entries", color: "#3ab09e" },
+        { key: "Senses", color: "#ff4f00" },
+        { key: "Translations", color: "#000080" }
+    ];
+
     useEffect(() => {
         doMainCountsForAllLanguages().then(normalizeSparqlData).then(setData);
     }, []);
@@ -121,74 +129,9 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid>
-                <form>
-                    <div className="checkboxes">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isTranslations}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsTranslations(!isTranslations)}
-                            />
-                            <span>Translations</span>
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isSenses}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsSenses(!isSenses)}
-                            />
-                            <span>Senses</span>
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isEntries}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsEntries(!isEntries)}
-                            />
-                            <span>Entries</span>
-                        </label>
-
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isVocables}
-                                style={{ width: 20, height: 20 }}
-                                onClick={() => setIsVocables(!isVocables)}
-                            />
-                            <span>Vocables</span>
-                        </label>
-                    </div>
-                </form>
-            </Grid>
             <Grid item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                        data={data}
-                        margin={{
-                            top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tick={<YAxisNumberTick />} />
-                        <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
-                        {isVocables ? <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} /> : ""}
-                        {isEntries ? <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} /> : ""}
-                        {isSenses ? <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} /> : ""}
-                        {isTranslations ? (
-                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
-                        ) : (
-                            ""
-                        )}
-                    </BarChart>
+                    <BarGraph title="test" data={data} labels={inputLabels} />
                 </ResponsiveContainer>
             </Grid>
         </Grid>
