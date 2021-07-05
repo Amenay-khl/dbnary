@@ -230,3 +230,29 @@ export async function doNumberOftranslationsForFr(): Promise<SparqlResponse> {
         }
     });
 }
+
+const allLanguagesForNavBar =
+    "SELECT ?Language \n" +
+    "WHERE\n" +
+    "{\n" +
+    "    {\n" +
+    "# Select the latest version\n" +
+    "SELECT distinct(?version) as ?maxversion\n" +
+    " WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
+    "ORDER BY DESC(?version) LIMIT 1\n" +
+    "}\n" +
+    "?obs\n" +
+    "    qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    "   dbnary:observationLanguage ?Language.\n" +
+    "}\n" +
+    "GROUP BY ?Language\n" +
+    "ORDER BY ?Language";
+
+export async function doAllLanguagesForNavBar(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOftranslationsForFr
+        }
+    });
+}
