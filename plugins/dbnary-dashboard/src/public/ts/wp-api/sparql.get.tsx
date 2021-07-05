@@ -252,7 +252,7 @@ export async function doAllLanguagesForNavBar(): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
-            query: numberOftranslationsForFr
+            query: allLanguagesForNavBar
         }
     });
 }
