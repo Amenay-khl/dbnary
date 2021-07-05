@@ -9,7 +9,7 @@ import { DecorationSpec } from "./styles";
 
 /* The decorations to provide to the generic barchart */
 
-const MaquetteByLanguages: FC<{ decorations: Record<string, DecorationSpec> }> = ({ decorations, ...rest }) => {
+const MaquetteByLanguages: FC<any> = () => {
     // const [openTab, setOpenTab] = useState(1);
 
     return (

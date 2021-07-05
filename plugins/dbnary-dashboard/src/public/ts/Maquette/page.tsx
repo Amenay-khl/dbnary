@@ -8,7 +8,6 @@ import Navbar from "./navbar";
 const Maquette: FC<{}> = () => {
     return (
         <div className="wp-styleguide">
-            <StatsLine decorations={decorations} />
             <Navbar />
         </div>
     );
