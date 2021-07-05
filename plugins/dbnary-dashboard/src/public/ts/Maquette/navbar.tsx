@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MainBarChart } from "./mainBarChart";
 import { NumberOfElements } from "../numberOfElements";
+import { MaquetteByLanguages } from "./MaquetteByLanguages";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -84,7 +85,7 @@ export default function Navbar() {
                 <MainBarChart />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <NumberOfElements />
+                <MaquetteByLanguages />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 içi en
