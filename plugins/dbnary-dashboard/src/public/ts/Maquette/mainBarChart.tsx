@@ -7,9 +7,9 @@ import Grid from "@material-ui/core/Grid";
 
 /* The decorations to provide to the generic barchart */
 
-const MainBarChart: FC<{ decorations: Record<string, DecorationSpec> }> = ({ decorations, ...rest }) => {
+const MainBarChart: FC<{}> = () => {
     return (
-        <Grid container item xs={12} spacing={0} justify="space-between" alignItems="center" {...rest}>
+        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center">
             <Grid item xs={4}>
                 <NumberOfElements />{" "}
             </Grid>

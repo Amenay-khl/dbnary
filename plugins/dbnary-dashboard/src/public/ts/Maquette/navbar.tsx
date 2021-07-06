@@ -2,9 +2,9 @@ import { AppBar, colors, Grid, makeStyles, Tab, Tabs, Box, Typography } from "@m
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MainBarChart } from "./mainBarChart";
-import { NumberOfElements } from "../numberOfElements";
+import { NumberOfElementsByLanguage } from "../numberOfElementsByLanguage/numberOfElementsForFr";
 
-import { MaquetteByLanguages } from "./maquetteByLanguages";
+//import { MaquetteByLanguages } from "./maquetteByLanguages";
 import { doAllLanguagesForNavBar, doNumberOfLexicalRelationsForFr, SparqlResponse, TypedValue } from "../wp-api";
 import { LensTwoTone } from "@material-ui/icons";
 import { StatsLine } from "../dashboard/statsLine";
@@ -96,19 +96,25 @@ export default function Navbar() {
                     scrollButtons="auto"
                 >
                     <Tab label="General" {...a11yProps(0)} />
-                    {data.map((label, index) => {
+                    {data.map((label) => {
                         x += 1;
                         return <Tab label={label.Language} {...a11yProps(x)} />;
                     })}
                 </Tabs>
             </AppBar>
+            {(x = 0)}
             <TabPanel value={value} index={0}>
-                <StatsLine decorations={decorations} />
                 <MainBarChart />
             </TabPanel>
-            {data.map((label, index) => (
-                <TabPanel value={value} index={index}></TabPanel>
-            ))}
+            {data.map((label) => {
+                x += 1;
+                return (
+                    <TabPanel value={value} index={x}>
+                        <div>{label.Language}</div>
+                        <NumberOfElementsByLanguage langue={label.Language} />
+                    </TabPanel>
+                );
+            })}
         </div>
     );
 }

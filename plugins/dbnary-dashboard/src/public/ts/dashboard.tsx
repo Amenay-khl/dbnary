@@ -11,7 +11,7 @@ import { RootStore } from "./store";
 import { NumberOfElements } from "./numberOfElements/";
 import { NumberOfLexicalRelations } from "./numberOfLexicalRelations/";
 import { NumberOfTranslations } from "./numberOfTranslations/";
-import { NumberOfElementsForFr } from "./numberOfElementsByLanguage/numberOfElementsForFr/";
+import { NumberOfElementsByLanguage } from "./numberOfElementsByLanguage/numberOfElementsForFr/";
 import { NumberOfLexicalRelationsForFr } from "./numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
 import { NumberOfTranslationsForFr } from "./numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
 import { Maquette } from "./Maquette/";
@@ -64,7 +64,7 @@ if (node4) {
 if (node5) {
     render(
         <RootStore.StoreProvider>
-            <NumberOfElementsForFr />
+            <NumberOfElementsByLanguage langue="fr" />
         </RootStore.StoreProvider>,
         node5
     );
