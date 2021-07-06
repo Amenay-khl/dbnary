@@ -107,9 +107,7 @@ export default function Navbar() {
                 <MainBarChart />
             </TabPanel>
             {data.map((label, index) => (
-                <TabPanel value={value} index={index}>
-                    <div>{label.Language}</div>
-                </TabPanel>
+                <TabPanel value={value} index={index}></TabPanel>
             ))}
         </div>
     );

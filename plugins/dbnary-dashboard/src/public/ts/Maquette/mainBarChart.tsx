@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 
 const MainBarChart: FC<{ decorations: Record<string, DecorationSpec> }> = ({ decorations, ...rest }) => {
     return (
-        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center" {...rest}>
+        <Grid container item xs={12} spacing={0} justify="space-between" alignItems="center" {...rest}>
             <Grid item xs={4}>
                 <NumberOfElements />{" "}
             </Grid>

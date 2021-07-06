@@ -126,16 +126,15 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         data={data}
                         margin={{
                             top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
+                            right: 0,
+                            left: 0,
+                            bottom: 20
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
-                        {isOpen ? <Legend /> : ""}
                         <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} />
                         <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
                         <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />

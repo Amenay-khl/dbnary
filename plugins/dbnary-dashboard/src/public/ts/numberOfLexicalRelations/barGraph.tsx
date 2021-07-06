@@ -78,7 +78,7 @@ const BarGraph = ({ title, data, labels, open }) => {
     return (
         <div>
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart width={600} height={300} data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <BarChart width={600} height={300} data={data} margin={{ top: 20, right: 0, left: 0, bottom: 20 }}>
                     <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
                     <YAxis type="number" tick={<YAxisNumberTick />} />
                     <Tooltip labelFormatter={langNameFormatter} />

@@ -128,7 +128,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         >
             <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarGraph title="test" data={result} labels={inputLabels} open={isOpen} />
+                    <BarGraph title="test" data={result} labels={inputLabels} open={false} />
                 </ResponsiveContainer>
             </Grid>
             {isOpen && (
