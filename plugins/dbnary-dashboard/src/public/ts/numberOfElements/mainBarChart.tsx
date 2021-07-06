@@ -7,6 +7,7 @@ import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import Dialog from "@material-ui/core/Dialog";
+import BarGraph from "./barGraph";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -102,6 +103,9 @@ const langNameFormatter = (label: any) => {
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const [isOpen, setState] = useState(false);
+    const handleClose = () => {
+        setState(false);
+    };
 
     const classes = useStyles();
 
@@ -127,52 +131,23 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid className="small" onClick={() => setState(!isOpen)} item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                        data={data}
-                        margin={{
-                            top: 20,
-                            right: 0,
-                            left: 0,
-                            bottom: 20
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tick={<YAxisNumberTick />} />
-                        <Tooltip labelFormatter={langNameFormatter} />
-                        <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} />
-                        <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
-                        <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />
-
-                        <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
-                    </BarChart>
+                    <BarGraph title="test" data={data} labels={inputLabels} open={false} />
                 </ResponsiveContainer>
             </Grid>
             {isOpen && (
-                <Dialog fullWidth={true} maxWidth={"md"} open onClick={() => setState(!isOpen)}>
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
                     <ResponsiveContainer width="100%" height={300}>
-                        <BarChart
-                            data={data}
-                            margin={{
-                                top: 20,
-                                right: 30,
-                                left: 20,
-                                bottom: 5
-                            }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
-                            <YAxis type="number" tick={<YAxisNumberTick />} />
-                            <Tooltip labelFormatter={langNameFormatter} />
-                            <Legend />
-                            <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} />
-                            <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
-                            <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />
-
-                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
-                        </BarChart>
+                        <BarGraph title="test" data={data} labels={inputLabels} open={isOpen} />
                     </ResponsiveContainer>
                 </Dialog>
             )}
