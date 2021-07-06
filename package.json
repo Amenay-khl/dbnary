@@ -201,6 +201,7 @@
         "typescript": "~3.9.5"
     },
     "dependencies": {
-        "json-to-pivot-json": "^1.0.1"
+        "json-to-pivot-json": "^1.0.1",
+        "wsl": "^1.0.0"
     }
 }

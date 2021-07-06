@@ -1,19 +1,16 @@
 import React, { FC } from "react";
 import { MainBarChart } from "./mainBarChart";
+import { StatsLine } from "../dashboard/statsLine";
 import { decorations } from "./styles";
+import Navbar from "./navbar";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
-type param = {
-    langue: String;
-};
-const NumberOfElementsByLanguage: FC<{ langue: String }> = (langue) => {
-    console.log("langue :");
-    console.log(langue);
+const Maquette: FC<{}> = () => {
     return (
         <div className="wp-styleguide">
-            <MainBarChart decorations={decorations} langue={langue} />
+            <Navbar />
         </div>
     );
 };
 
-export { NumberOfElementsByLanguage };
+export { Maquette };

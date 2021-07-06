@@ -7,6 +7,8 @@ import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import BarGraph from "./barGraph";
+import Dialog from "@material-ui/core/Dialog";
+
 function valueAsString(val: TypedValue): string {
     return val.value;
 }
@@ -106,6 +108,11 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         doMainCountsForAllLexicalRelations().then(normalizeSparqlData).then(setData);
     }, []);
 
+    const [isOpen, setState] = useState(false);
+    const handleClose = () => {
+        setState(false);
+    };
+
     const result = groupBy(data, "l").map(pivot);
 
     return (
@@ -119,11 +126,26 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarGraph title="test" data={result} labels={inputLabels} />
+                    <BarGraph title="test" data={result} labels={inputLabels} open={false} />
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarGraph title="test" data={result} labels={inputLabels} open={isOpen} />
+                    </ResponsiveContainer>
+                </Dialog>
+            )}
         </Grid>
     );
 };

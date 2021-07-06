@@ -158,7 +158,7 @@ export async function doMainCountsForAlltranslations(): Promise<SparqlResponse> 
     });
 }
 
-const numberOfElementsForFr =
+const numberOfElementsByLanguage = (langue: string) =>
     "SELECT ?Language,\n" +
     "?maxversion as ?Version,\n" +
     "?num_entries as ?Entries,\n" +
@@ -175,15 +175,20 @@ const numberOfElementsForFr =
     "dbnary:lexicalSenseCount ?num_senses ;\n" +
     "dbnary:translationsCount ?num_translations ;\n" +
     "dbnary:wiktionaryDumpVersion ?maxversion .\n" +
-    "filter(?Language='fr')\n" +
+    "filter(?Language='" +
+    { langue } +
+    "')\n" +
     "}\n" +
     "ORDER BY ?maxversion";
 
-export async function donumberOfElementsForFr(): Promise<SparqlResponse> {
+export async function donumberOfElementsByLanguage(langue: string): Promise<SparqlResponse> {
+    console.log(numberOfElementsByLanguage(langue));
+    console.log(langue);
+    let newlangue: string = JSON.stringify(langue);
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
-            query: numberOfElementsForFr
+            query: numberOfElementsByLanguage(newlangue)
         }
     });
 }
@@ -227,6 +232,32 @@ export async function doNumberOftranslationsForFr(): Promise<SparqlResponse> {
         location: sparqlGetLocation,
         params: {
             query: numberOftranslationsForFr
+        }
+    });
+}
+
+const allLanguagesForNavBar =
+    "SELECT ?Language \n" +
+    "WHERE\n" +
+    "{\n" +
+    "    {\n" +
+    "# Select the latest version\n" +
+    "SELECT distinct(?version) as ?maxversion\n" +
+    " WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
+    "ORDER BY DESC(?version) LIMIT 1\n" +
+    "}\n" +
+    "?obs\n" +
+    "    qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    "   dbnary:observationLanguage ?Language.\n" +
+    "}\n" +
+    "GROUP BY ?Language\n" +
+    "ORDER BY ?Language";
+
+export async function doAllLanguagesForNavBar(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: allLanguagesForNavBar
         }
     });
 }

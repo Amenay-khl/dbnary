@@ -12,6 +12,7 @@ import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import BarGraph from "./barGraph";
+import Dialog from "@material-ui/core/Dialog";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -125,9 +126,10 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     }, []);
 
     const result = groupBy(data, "l").map(pivot);
-
-    console.log(data);
-    console.log(result);
+    const [isOpen, setState] = useState(false);
+    const handleClose = () => {
+        setState(false);
+    };
 
     return (
         <Grid
@@ -140,41 +142,26 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarGraph title="test" data={result} labels={inputLabels} />
-
-                    {/* <BarChart
-                        data={result}
-                        margin={{
-                            top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
-                        <YAxis type="number" tick={<YAxisNumberTick />} />
-                        <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
-                        <Bar dataKey="de" stackId="a" fill="#7B241C" />
-                        <Bar dataKey="el" stackId="a" fill="#ff4f00 " />
-                        <Bar dataKey="en" stackId="a" fill="#C39BD3" />
-                        <Bar dataKey="fi" stackId="a" fill="#5B2C6F " />
-                        <Bar dataKey="fr" stackId="a" fill="#2471A3" />
-                        <Bar dataKey="it" stackId="a" fill="#85C1E9" />
-                        <Bar dataKey="id" stackId="a" fill="#48C9B0" />
-                        <Bar dataKey="ja" stackId="a" fill="#229954" />
-                        <Bar dataKey="mul" stackId="a" fill="#F9E79F" />
-                        <Bar dataKey="number_of_languages:" stackId="a" fill="#B3B6B7" />
-                        <Bar dataKey="others:" stackId="a" fill="#F39C12" />
-                        <Bar dataKey="pt" stackId="a" fill="#fdff00" />
-                        <Bar dataKey="ru" stackId="a" fill="#34495E " />
-                        <Bar dataKey="tr" stackId="a" fill="#ff00ff" />
-                    </BarChart> */}
+                    <BarGraph title="test" data={result} labels={inputLabels} open={false} />
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarGraph title="test" data={result} labels={inputLabels} open={isOpen} />
+                    </ResponsiveContainer>
+                </Dialog>
+            )}
         </Grid>
     );
 };
