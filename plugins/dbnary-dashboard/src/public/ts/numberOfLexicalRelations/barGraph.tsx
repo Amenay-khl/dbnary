@@ -4,7 +4,7 @@ import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
 import { DecorationSpec } from "./styles";
 
-const BarGraph = ({ title, data, labels }) => {
+const BarGraph = ({ title, data, labels, open }) => {
     const [barProps, setBarProps] = useState(
         labels.reduce(
             (a, { key }) => {
@@ -82,7 +82,7 @@ const BarGraph = ({ title, data, labels }) => {
                     <XAxis dataKey="l" tick={<XAxisLanguageTick />} />
                     <YAxis type="number" tick={<YAxisNumberTick />} />
                     <Tooltip labelFormatter={langNameFormatter} />
-                    <Legend onClick={selectBar} />
+                    {open ? <Legend onClick={selectBar} /> : ""}
                     {labels.map((label) => (
                         <Bar
                             key={label.key}
