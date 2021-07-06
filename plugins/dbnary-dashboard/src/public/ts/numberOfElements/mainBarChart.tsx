@@ -6,6 +6,7 @@ import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-a
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
+import Dialog from "@material-ui/core/Dialog";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -100,10 +101,8 @@ const langNameFormatter = (label: any) => {
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
-    const [isTranslations, setIsTranslations] = useState(true);
-    const [isSenses, setIsSenses] = useState(true);
-    const [isEntries, setIsEntries] = useState(true);
-    const [isVocables, setIsVocables] = useState(true);
+    const [isOpen, setState] = useState(false);
+
     const classes = useStyles();
 
     useEffect(() => {
@@ -121,7 +120,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid item xs={12} xl={6}>
+            <Grid className="small" onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart
                         data={data}
@@ -136,18 +135,41 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
-                        {isVocables ? <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} /> : ""}
-                        {isEntries ? <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} /> : ""}
-                        {isSenses ? <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} /> : ""}
-                        {isTranslations ? (
-                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
-                        ) : (
-                            ""
-                        )}
+                        {isOpen ? <Legend /> : ""}
+                        <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} />
+                        <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
+                        <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />
+
+                        <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
                     </BarChart>
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog fullWidth={true} maxWidth={"md"} open onClick={() => setState(!isOpen)}>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart
+                            data={data}
+                            margin={{
+                                top: 20,
+                                right: 30,
+                                left: 20,
+                                bottom: 5
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="Language" tick={<XAxisLanguageTick />} />
+                            <YAxis type="number" tick={<YAxisNumberTick />} />
+                            <Tooltip labelFormatter={langNameFormatter} />
+                            <Legend />
+                            <Bar dataKey="Vocables" stackId="a" fill={decorations["page"].color} />
+                            <Bar dataKey="Entries" stackId="a" fill={decorations["entry"].color} />
+                            <Bar dataKey="Senses" stackId="a" fill={decorations["sense"].color} />
+
+                            <Bar dataKey="Translations" stackId="a" fill={decorations["translation"].color} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Dialog>
+            )}
         </Grid>
     );
 };
