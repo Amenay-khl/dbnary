@@ -2,6 +2,7 @@ import React, { Component, FC, useEffect, useState } from "react";
 import { NumberOfElements } from "../numberOfElements";
 import { NumberOfLexicalRelations } from "../numberOfLexicalRelations/";
 import { NumberOfTranslations } from "../numberOfTranslations";
+import { EnhancementConfidence } from "../enhancementConfidence/";
 import { DecorationSpec } from "./styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -20,7 +21,7 @@ const MainBarChart: FC<{}> = () => {
                 <NumberOfTranslations />
             </Grid>
             <Grid item xs={4}>
-                <NumberOfElements />
+                <EnhancementConfidence />
             </Grid>
             <Grid item xs={4}>
                 <NumberOfElements />
