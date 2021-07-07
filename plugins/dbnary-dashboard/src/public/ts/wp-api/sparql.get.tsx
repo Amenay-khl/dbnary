@@ -5,6 +5,7 @@ import {
     RouteRequestInterface,
     RouteParamsInterface
 } from "@dbnary-dashboard/utils";
+import { version } from "fork-ts-checker-webpack-plugin";
 import { request } from "../utils";
 
 export const sparqlGetLocation: RouteLocationInterface = {
@@ -98,6 +99,165 @@ export async function doMainCountsForAllLanguages(): Promise<SparqlResponse> {
         location: sparqlGetLocation,
         params: {
             query: mainCountsForAllLanguages
+        }
+    });
+}
+
+const mainCountsForAllLexicalRelations =
+    "SELECT ?l , ?maxversion, ?nym, ?count  \n" +
+    " WHERE{\n" +
+    " {\n" +
+    "      # Select the latest verison \n" +
+    "     SELECT distinct(?version) as ?maxversion\n" +
+    "    WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "      ORDER BY DESC (?version) LIMIT 1 \n" +
+    " }\n" +
+    "  ?o a qb:Observation;\n" +
+    "  qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
+    "  dbnary:observationLanguage ?l;\n" +
+    "  dbnary:wiktionaryDumpVersion ?maxversion;\n" +
+    "  dbnary:nymRelation ?nym;\n" +
+    "  dbnary:count ?count .\n" +
+    " }";
+"GROUP BY ?l\n" + "ORDER BY ?l";
+
+export async function doMainCountsForAllLexicalRelations(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: mainCountsForAllLexicalRelations
+        }
+    });
+}
+
+const mainCountsForAlltranslations =
+    "PREFIX lemon:<http://www.w3.org/ns/lemon/lime#>\n" +
+    "SELECT ?l , ?maxversion, ?Languages, ?count   WHERE{\n" +
+    "   {\n" +
+    "       # Select the latest verison \n" +
+    "       SELECT distinct(?version) as ?maxversion \n" +
+    "      WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "      ORDER BY DESC (?version) LIMIT 1 \n" +
+    "  } \n" +
+    "  ?o a qb:Observation; \n" +
+    "  qb:dataSet dbnstats:dbnaryTranslationsCube; \n" +
+    "  dbnary:observationLanguage ?l; \n" +
+    "  dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "  lemon:language ?Languages; \n" +
+    "  dbnary:count ?count . \n" +
+    "} \n" +
+    "GROUP BY ?l\n" +
+    "ORDER BY ?l";
+
+export async function doMainCountsForAlltranslations(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: mainCountsForAlltranslations
+        }
+    });
+}
+
+const numberOfElementsByLanguage = (langue) =>
+    "SELECT ?Language,\n" +
+    "?maxversion as ?Version,\n" +
+    "?num_entries as ?Entries,\n" +
+    "?num_pages as ?Vocables,\n" +
+    "?num_senses as ?Senses,\n" +
+    "?num_translations as ?Translations\n" +
+    "WHERE\n" +
+    "{\n" +
+    "?obs\n" +
+    "qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    "dbnary:observationLanguage ?Language ;\n" +
+    "dbnary:lexicalEntryCount ?num_entries ;\n" +
+    "dbnary:pageCount ?num_pages ;\n" +
+    "dbnary:lexicalSenseCount ?num_senses ;\n" +
+    "dbnary:translationsCount ?num_translations ;\n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion .\n" +
+    "filter(?Language='" +
+    langue +
+    "')\n" +
+    "}\n" +
+    "ORDER BY ?maxversion";
+
+export async function donumberOfElementsByLanguage(langue): Promise<SparqlResponse> {
+    console.log(numberOfElementsByLanguage(langue));
+    console.log(langue);
+
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOfElementsByLanguage(langue)
+        }
+    });
+}
+
+const numberOfLexicalRelationsForFr =
+    "SELECT ?l , ?maxversion, ?nym, ?count  \n" +
+    "WHERE{\n" +
+    "?o a qb:Observation;\n" +
+    "qb:dataSet dbnstats:dbnaryNymRelationsCube;\n" +
+    "dbnary:observationLanguage ?l;\n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion;\n" +
+    "dbnary:nymRelation ?nym;\n" +
+    "dbnary:count ?count .\n" +
+    "filter(?l='fr')     }\n" +
+    "ORDER BY ?maxversion";
+
+export async function doNumberOfLexicalRelationsForFr(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOfLexicalRelationsForFr
+        }
+    });
+}
+
+const numberOftranslationsForFr =
+    "PREFIX lemon:<http://www.w3.org/ns/lemon/lime#>\n" +
+    "SELECT ?l , ?maxversion, ?Languages, ?count   WHERE{\n" +
+    "?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:dbnaryTranslationsCube; \n" +
+    "dbnary:observationLanguage ?l; \n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "lemon:language ?Languages; \n" +
+    "dbnary:count ?count . \n" +
+    "filter(?l='fr').\n" +
+    "} \n" +
+    "ORDER BY ?maxversion";
+
+export async function doNumberOftranslationsForFr(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: numberOftranslationsForFr
+        }
+    });
+}
+
+const allLanguagesForNavBar =
+    "SELECT ?Language \n" +
+    "WHERE\n" +
+    "{\n" +
+    "    {\n" +
+    "# Select the latest version\n" +
+    "SELECT distinct(?version) as ?maxversion\n" +
+    " WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
+    "ORDER BY DESC(?version) LIMIT 1\n" +
+    "}\n" +
+    "?obs\n" +
+    "    qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    "   dbnary:observationLanguage ?Language.\n" +
+    "}\n" +
+    "GROUP BY ?Language\n" +
+    "ORDER BY ?Language";
+
+export async function doAllLanguagesForNavBar(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: allLanguagesForNavBar
         }
     });
 }

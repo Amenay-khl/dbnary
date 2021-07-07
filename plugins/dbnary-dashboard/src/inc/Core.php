@@ -7,8 +7,12 @@ use GillesSerasset\DbnaryDashboard\view\menu\Page;
 use GillesSerasset\DbnaryDashboard\view\dashboard\Dashboard;
 use GillesSerasset\DbnaryDashboard\view\widget\Widget;
 use GillesSerasset\DbnaryDashboard\view\numberOfElements\NumberOfElements;
-
-
+use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelations\NumberOfLexicalRelations;
+use  GillesSerasset\DbnaryDashboard\view\numberOfTranslations\NumberOfTranslations;
+use  GillesSerasset\DbnaryDashboard\view\numberOfElementsByLanguage\numberOfElementsForFr\NumberOfElementsForFr;
+use GillesSerasset\DbnaryDashboard\view\numberOfLexicalRelationsByLanguage\numberOfLexicalRelationsForFr\NumberOfLexicalRelationsForFr;
+use GillesSerasset\DbnaryDashboard\view\numberOfTranslationsByLanguages\numberOfTranslationsForFr\NumberOfTranslationsForFr;
+use GillesSerasset\DbnaryDashboard\view\Maquette\Maquette;
 // @codeCoverageIgnoreStart
 defined('ABSPATH') or die('No script kiddies please!'); // Avoid direct file request
 // @codeCoverageIgnoreEnd
@@ -46,7 +50,12 @@ class Core extends BaseCore {
         add_action('admin_menu', [Page::instance(), 'admin_menu']);
         add_shortcode('dbdashboard', [Dashboard::instance(), 'shortcode']);
         add_shortcode('nbOfElements', [NumberOfElements::instance(), 'shortcode']);
-
+        add_shortcode('nbOfLexicalRelation', [NumberOfLexicalRelations::instance(), 'shortcode']);
+        add_shortcode('nbOfTranslations', [NumberOfTranslations::instance(), 'shortcode']);
+        add_shortcode('nbOfElementsForFr', [NumberOfElementsForFr::instance(), 'shortcode']);
+        add_shortcode('nbOfLexicalRelationForFr', [NumberOfLexicalRelationsForFr::instance(), 'shortcode']);
+        add_shortcode('nbOfTranslationsForFr', [NumberOfTranslationsForFr::instance(), 'shortcode']);
+        add_shortcode('Maquette', [Maquette::instance(), 'shortcode']);
     }
 
     /**

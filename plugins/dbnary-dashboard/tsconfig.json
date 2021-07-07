@@ -2,7 +2,8 @@
     "extends": "../../common/tsconfig.json",
     "include": ["src/public/ts/**/*", "scripts/**/*.ts", "test/jest/**/*"],
     "compilerOptions": {
-        "outDir": "types/"
+        "outDir": "types/",
+        "noImplicitAny": false
     },
     "typedocOptions": {
         "mode": "modules",

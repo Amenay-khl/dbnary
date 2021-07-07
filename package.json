@@ -197,5 +197,9 @@
         "prettier": "^2.0.5",
         "rimraf": "^3.0.2",
         "typescript": "~3.9.5"
+    },
+    "dependencies": {
+        "json-to-pivot-json": "^1.0.1",
+        "wsl": "^1.0.0"
     }
 }

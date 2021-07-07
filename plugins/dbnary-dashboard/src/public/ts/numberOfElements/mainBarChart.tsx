@@ -6,8 +6,13 @@ import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-a
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
+<<<<<<< HEAD
 import * as css from "./style.css";
 import BarGraph from "./BarChart";
+=======
+import Dialog from "@material-ui/core/Dialog";
+import BarGraph from "./barGraph";
+>>>>>>> 60b0012fe911d2b31aa053ec5a4b2f19e514f9c7
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -24,7 +29,7 @@ const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
     Version: valueAsString,
     Entries: valueAsInt,
-    Pages: valueAsInt,
+    Vocables: valueAsInt,
     Translations: valueAsInt,
     Senses: valueAsInt
 };
@@ -102,16 +107,24 @@ const langNameFormatter = (label: any) => {
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
-    const [isTranslations, setIsTranslations] = useState(true);
-    const [isSenses, setIsSenses] = useState(true);
-    const [isEntries, setIsEntries] = useState(true);
-    const [isVocables, setIsVocables] = useState(true);
+    const [isOpen, setState] = useState(false);
+    const handleClose = () => {
+        setState(false);
+    };
+
     const classes = useStyles();
     let inputLabels = [
         { key: "Vocables", color: decorations["vocable"].color },
         { key: "Entries", color: decorations["entry"].color },
         { key: "Senses", color: decorations["sense"].color },
         { key: "Translations", color: decorations["translation"].color }
+    ];
+
+    let inputLabels = [
+        { key: "Vocables", color: "#fdff00" },
+        { key: "Entries", color: "#3ab09e" },
+        { key: "Senses", color: "#ff4f00" },
+        { key: "Translations", color: "#000080" }
     ];
 
     useEffect(() => {
@@ -129,52 +142,30 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid>
-                <div className="css-checkbox">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isTranslations}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsTranslations(!isTranslations)}
-                        />
-                        <span>Translations</span>
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isSenses}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsSenses(!isSenses)}
-                        />
-                        <span>Senses</span>
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isEntries}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsEntries(!isEntries)}
-                        />
-                        <span>Entries</span>
-                    </label>
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isVocables}
-                            style={{ width: 20, height: 20 }}
-                            onClick={() => setIsVocables(!isVocables)}
-                        />
-                        <span>Vocables</span>
-                    </label>
-                </div>
-            </Grid>
-            <Grid item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
+<<<<<<< HEAD
                     <BarGraph title="test" data={data} labels={inputLabels} />
+=======
+                    <BarGraph title="test" data={data} labels={inputLabels} open={false} />
+>>>>>>> 60b0012fe911d2b31aa053ec5a4b2f19e514f9c7
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarGraph title="test" data={data} labels={inputLabels} open={isOpen} />
+                    </ResponsiveContainer>
+                </Dialog>
+            )}
         </Grid>
     );
 };
