@@ -36,7 +36,7 @@ function valueAsInt(val: TypedValue): number {
 type MainBarChartProps = {
     decorations: Record<string, DecorationSpec>;
     provider: () => Promise<SparqlResponse>;
-    langue: String;
+    langue;
 };
 
 const types: Record<string, (tval: TypedValue) => any> = {
@@ -119,7 +119,7 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, langue, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const classes = useStyles();
     console.log("langue2 :");

@@ -158,7 +158,7 @@ export async function doMainCountsForAlltranslations(): Promise<SparqlResponse> 
     });
 }
 
-const numberOfElementsByLanguage = (langue: string) =>
+const numberOfElementsByLanguage = (langue) =>
     "SELECT ?Language,\n" +
     "?maxversion as ?Version,\n" +
     "?num_entries as ?Entries,\n" +
@@ -176,19 +176,19 @@ const numberOfElementsByLanguage = (langue: string) =>
     "dbnary:translationsCount ?num_translations ;\n" +
     "dbnary:wiktionaryDumpVersion ?maxversion .\n" +
     "filter(?Language='" +
-    { langue } +
+    langue +
     "')\n" +
     "}\n" +
     "ORDER BY ?maxversion";
 
-export async function donumberOfElementsByLanguage(langue: string): Promise<SparqlResponse> {
+export async function donumberOfElementsByLanguage(langue): Promise<SparqlResponse> {
     console.log(numberOfElementsByLanguage(langue));
     console.log(langue);
-    let newlangue: string = JSON.stringify(langue);
+
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
-            query: numberOfElementsByLanguage(newlangue)
+            query: numberOfElementsByLanguage(langue)
         }
     });
 }

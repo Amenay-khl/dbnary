@@ -6,7 +6,7 @@ import { decorations } from "./styles";
 type param = {
     langue: String;
 };
-const NumberOfElementsByLanguage: FC<{ langue: String }> = (langue) => {
+const NumberOfElementsByLanguage = ({ langue }) => {
     console.log("langue :");
     console.log(langue);
     return (
