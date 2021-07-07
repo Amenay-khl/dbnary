@@ -104,6 +104,7 @@ export default function Navbar() {
             </AppBar>
             {(x = 0)}
             <TabPanel value={value} index={0}>
+                <StatsLine decorations={decorations} />
                 <MainBarChart />
             </TabPanel>
             {data.map((label) => {
