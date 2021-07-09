@@ -15,13 +15,14 @@ import {
 } from "recharts";
 import {
     doMainCountsForAllLexicalRelations,
-    doNumberOfLexicalRelationsForFr,
+    doNumberOfLexicalRelationsByLanguage,
     SparqlResponse,
     TypedValue
 } from "../../wp-api/sparql.get";
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../../utils/iso636_1";
+import Dialog from "@material-ui/core/Dialog";
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -32,7 +33,11 @@ function valueAsInt(val: TypedValue): number {
 }
 
 /* The decorations to provide to the generic barchart */
-type MainBarChartProps = { decorations: Record<string, DecorationSpec>; provider: () => Promise<SparqlResponse> };
+type MainBarChartProps = {
+    decorations: Record<string, DecorationSpec>;
+    provider: () => Promise<SparqlResponse>;
+    langue;
+};
 
 const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
@@ -139,20 +144,21 @@ function pivot(data) {
     );
 }
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
         { l: "es", maxversion: "20210620", nym: "http://kaiko.getalp.org/dbnary#antonym", count: "2827" }
     ]);
+    const [isOpen, setState] = useState(false);
     const classes = useStyles();
+    const handleClose = () => {
+        setState(false);
+    };
 
     useEffect(() => {
-        doNumberOfLexicalRelationsForFr().then(normalizeSparqlData).then(setData);
+        doNumberOfLexicalRelationsByLanguage(langue).then(normalizeSparqlData).then(setData);
     }, []);
 
     const result = groupBy(data, "maxversion").map(pivot);
-    console.log(data);
-
-    console.log(result);
 
     return (
         <Grid
@@ -165,7 +171,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                         width={500}
@@ -183,7 +189,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                         <XAxis dataKey="" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
+                        {isOpen ? <Legend /> : ""}
                         <Area type="monotone" dataKey="antonym" stackId="1" fill="#777b27" stroke="#777b27" />
                         <Area
                             type="monotone"
@@ -200,6 +206,53 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
                     </AreaChart>
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
+                    <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <AreaChart
+                                width={500}
+                                height={200}
+                                data={result}
+                                syncId="anyId"
+                                margin={{
+                                    top: 10,
+                                    right: 30,
+                                    left: 0,
+                                    bottom: 0
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="" tick={<XAxisLanguageTick />} />
+                                <YAxis type="number" tick={<YAxisNumberTick />} />
+                                <Tooltip labelFormatter={langNameFormatter} />
+                                {isOpen ? <Legend /> : ""}
+                                <Area type="monotone" dataKey="antonym" stackId="1" fill="#777b27" stroke="#777b27" />
+                                <Area
+                                    type="monotone"
+                                    dataKey="approximateSynonym"
+                                    stackId="1"
+                                    fill="#c8c6ed"
+                                    stroke="#c8c6ed"
+                                />
+                                <Area type="monotone" dataKey="holonym" stackId="1" fill="#ff00ff" stroke="#ff00ff" />
+                                <Area type="monotone" dataKey="hypernym" stackId="1" fill="#000080" stroke="#000080" />
+                                <Area type="monotone" dataKey="hyponym" stackId="1" fill="#ff4f00" stroke="#ff4f00" />
+                                <Area type="monotone" dataKey="meronym" stackId="1" fill="#3ab09e" stroke="#3ab09e" />
+                                <Area type="monotone" dataKey="synonym" stackId="1" fill="#fdff00" stroke="#fdff00" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </Grid>
+                </Dialog>
+            )}
         </Grid>
     );
 };

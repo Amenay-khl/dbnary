@@ -160,16 +160,14 @@
         "tabWidth": 4,
         "endOfLine": "lf",
         "trailingComma": "none",
-        "overrides": [
-            {
-                "files": "*.php",
-                "options": {
-                    "singleQuote": true,
-                    "trailingCommaPHP": false,
-                    "braceStyle": "1tbs"
-                }
+        "overrides": [{
+            "files": "*.php",
+            "options": {
+                "singleQuote": true,
+                "trailingCommaPHP": false,
+                "braceStyle": "1tbs"
             }
-        ]
+        }]
     },
     "devDependencies": {
         "@commitlint/cli": "^9.0.1",

@@ -103,7 +103,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     const classes = useStyles();
 
     useEffect(() => {
-        doMainCountsForAllLanguages().then(normalizeSparqlData).then(setData);
+        provider().then(normalizeSparqlData).then(setData);
     }, []);
 
     return (

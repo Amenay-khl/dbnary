@@ -14,17 +14,6 @@ const BarGraph = ({ title, data, labels, open }) => {
             { hover: null }
         )
     );
-
-    const handleLegendMouseEnter = (e) => {
-        if (!barProps[e.dataKey]) {
-            setBarProps({ ...barProps, hover: e.dataKey });
-        }
-    };
-
-    const handleLegendMouseLeave = (e) => {
-        setBarProps({ ...barProps, hover: null });
-    };
-
     const selectBar = (e) => {
         setBarProps({
             ...barProps,

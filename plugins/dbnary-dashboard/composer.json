@@ -4,11 +4,9 @@
     "config": {
         "sort-packages": true
     },
-    "authors": [
-        {
-            "name": "Gilles Sérasset"
-        }
-    ],
+    "authors": [{
+        "name": "Gilles Sérasset"
+    }],
     "extra": {
         "metasyntactical/composer-plugin-license-check": {
             "whitelist": [
@@ -74,13 +72,11 @@
             ]
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../packages/*",
-            "options": {
-                "symlink": true
-            }
+    "repositories": [{
+        "type": "path",
+        "url": "../../packages/*",
+        "options": {
+            "symlink": true
         }
-    ]
+    }]
 }

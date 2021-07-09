@@ -9,6 +9,7 @@ import { doAllLanguagesForNavBar, doNumberOfLexicalRelationsForFr, SparqlRespons
 import { LensTwoTone } from "@material-ui/icons";
 import { StatsLine } from "../dashboard/statsLine";
 import { decorations } from "./styles";
+import { MaquetteByLanguages } from "./MaquetteByLanguages";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -112,7 +113,7 @@ export default function Navbar() {
                 return (
                     <TabPanel value={value} index={x}>
                         <div>{label.Language}</div>
-                        <NumberOfElementsByLanguage langue={label.Language} />
+                        <MaquetteByLanguages langue={label.Language} />
                     </TabPanel>
                 );
             })}

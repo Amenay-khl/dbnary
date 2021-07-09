@@ -12,11 +12,9 @@
             "tests"
         ]
     },
-    "authors": [
-        {
-            "name": "Gilles Sérasset"
-        }
-    ],
+    "authors": [{
+        "name": "Gilles Sérasset"
+    }],
     "extra": {
         "clean-all-except": [
             "src",

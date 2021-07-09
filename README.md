@@ -32,6 +32,15 @@ As the main purpose of this plugin is to be added to the DBnary website (hosted 
 -   On localhost go to Theme Customizer, then Import/Export and import the customizations
 -   On localhost, the Menus has been imported but not correctly added so go the Menus and install the navigation Menu as the Header Menu (and generally speaking, mimic the DBnary settings in the Customization Editor, i.e. Menus, Homepage Settings, Widgets, ...).
 
+## Many exploration due to buggy behaviour especially on my Mac OS X ARM M1 machine
+
+- brew installs node v16 which appears to break node-sass that is used in the template
+- Had to downgrade to node v14:
+    - `brew remove yarn node`
+    - `brew install node@14`
+    - `npm install --global yarn`
+- Now `yarn bootstrap` seems to work and `yarn docker:start` works also.
+
 # WP React Starter: WordPress React Boilerplate
 
 <img align="right" src="https://matthias-web.com/wp-content/uploads/WP-React-Starter/Git/wp-react-starter-logo.png" alt="WP React Starter Logo" height="180" />

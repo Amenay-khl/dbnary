@@ -7,8 +7,6 @@ type param = {
     langue: String;
 };
 const NumberOfElementsByLanguage = ({ langue }) => {
-    console.log("langue :");
-    console.log(langue);
     return (
         <div className="wp-styleguide">
             <MainBarChart decorations={decorations} langue={langue} />

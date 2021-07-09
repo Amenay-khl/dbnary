@@ -1,7 +1,7 @@
 import React, { Component, FC, useEffect, useState } from "react";
-import { NumberOfElementsForFr } from "../numberOfElementsByLanguage/numberOfElementsForFr/";
-import { NumberOfLexicalRelationsForFr } from "../numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
-import { NumberOfTranslationsForFr } from "../numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
+import { NumberOfElementsByLanguage } from "../numberOfElementsByLanguage/numberOfElementsForFr";
+import { NumberOfLexicalRelationsByLanguage } from "../numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
+import { NumberOfTranslationsByLanguage } from "../numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -9,19 +9,17 @@ import { DecorationSpec } from "./styles";
 
 /* The decorations to provide to the generic barchart */
 
-const MaquetteByLanguages: FC<any> = () => {
-    // const [openTab, setOpenTab] = useState(1);
-
+const MaquetteByLanguages = ({ langue }) => {
     return (
-        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center" {...rest}>
+        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center">
             <Grid item xs={4}>
-                <NumberOfElementsForFr />{" "}
+                <NumberOfElementsByLanguage langue={langue} />
             </Grid>
             <Grid item xs={4}>
-                <NumberOfLexicalRelationsForFr />
+                <NumberOfLexicalRelationsByLanguage langue={langue} />
             </Grid>
             <Grid item xs={4}>
-                <NumberOfTranslationsForFr />
+                <NumberOfTranslationsByLanguage langue={langue} />
             </Grid>
         </Grid>
     );
