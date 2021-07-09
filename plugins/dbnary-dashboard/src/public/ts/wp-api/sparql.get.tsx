@@ -262,3 +262,61 @@ export async function doAllLanguagesForNavBar(): Promise<SparqlResponse> {
         }
     });
 }
+
+const enhancementConfidenceDataCube =
+    "SELECT ?l , ?maxversion, ?enhancementMethod , ?f1Measure,?precisionMeasure,?recallMeasure   WHERE{\n" +
+    "    {\n" +
+    "       # Select the latest verison \n" +
+    "   SELECT distinct(?version) as ?maxversion \n" +
+    "  WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "  ORDER BY DESC (?version) LIMIT 1 \n" +
+    "} \n" +
+    "?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:enhancementConfidenceDataCube; \n" +
+    "dbnary:observationLanguage ?l; \n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "dbnary:enhancementMethod ?enhancementMethod ; \n" +
+    "dbnary:f1Measure  ?f1Measure ;\n" +
+    "dbnary:precisionMeasure   ?precisionMeasure ;\n" +
+    "dbnary:recallMeasure    ?recallMeasure .\n" +
+    "} \n" +
+    "GROUP BY ?l\n" +
+    "ORDER BY ?l";
+
+export async function doEnhancementConfidenceDataCube(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: enhancementConfidenceDataCube
+        }
+    });
+}
+
+const translationGlossesCube =
+    "SELECT ?l , ?maxversion, ?translationsWithSenseNumberAndTextualGloss , ?translationsWithNoGloss ,?translationsWithTextualGloss ,?translationsWithSenseNumber WHERE{\n" +
+    "    {\n" +
+    "       # Select the latest verison \n" +
+    "   SELECT distinct(?version) as ?maxversion \n" +
+    "  WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "  ORDER BY DESC (?version) LIMIT 1 \n" +
+    "} \n" +
+    "?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:translationGlossesCube; \n" +
+    "dbnary:observationLanguage ?l; \n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "dbnary:translationsWithSenseNumberAndTextualGloss  ?translationsWithSenseNumberAndTextualGloss ; \n" +
+    "dbnary:translationsWithNoGloss  ?translationsWithNoGloss ;\n" +
+    " dbnary:translationsWithTextualGloss    ?translationsWithTextualGloss ;\n" +
+    " dbnary:translationsWithSenseNumber     ?translationsWithSenseNumber .\n" +
+    "} \n" +
+    "GROUP BY ?l\n" +
+    "ORDER BY ?";
+
+export async function doTranslationGlossesCube(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: translationGlossesCube
+        }
+    });
+}
