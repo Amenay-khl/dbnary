@@ -23,7 +23,7 @@ import {
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../../utils/iso636_1";
-
+import Dialog from "@material-ui/core/Dialog";
 function valueAsString(val: TypedValue): string {
     return val.value;
 }
@@ -121,7 +121,11 @@ const langNameFormatter = (label: any) => {
 
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
+    const [isOpen, setState] = useState(false);
     const classes = useStyles();
+    const handleClose = () => {
+        setState(false);
+    };
 
     useEffect(() => {
         donumberOfElementsByLanguage(langue).then(normalizeSparqlData).then(setData);
@@ -138,7 +142,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ..
             className={clsx(classes.root)}
             {...rest}
         >
-            <Grid item xs={12} xl={6}>
+            <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                         width={500}
@@ -156,7 +160,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ..
                         <XAxis dataKey="Version" tick={<XAxisLanguageTick />} />
                         <YAxis type="number" tick={<YAxisNumberTick />} />
                         <Tooltip labelFormatter={langNameFormatter} />
-                        <Legend />
+                        {isOpen ? <Legend /> : ""}
                         <Area
                             type="monotone"
                             dataKey="Vocables"
@@ -188,6 +192,68 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ..
                     </AreaChart>
                 </ResponsiveContainer>
             </Grid>
+            {isOpen && (
+                <Dialog
+                    open
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    fullWidth={true}
+                    maxWidth={"md"}
+                >
+                    <Grid item xs={12} xl={6}>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <AreaChart
+                                width={500}
+                                height={200}
+                                data={data}
+                                syncId="anyId"
+                                margin={{
+                                    top: 10,
+                                    right: 30,
+                                    left: 0,
+                                    bottom: 0
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="Version" tick={<XAxisLanguageTick />} />
+                                <YAxis type="number" tick={<YAxisNumberTick />} />
+                                <Tooltip labelFormatter={langNameFormatter} />
+                                <Legend />
+                                <Area
+                                    type="monotone"
+                                    dataKey="Vocables"
+                                    stackId="1"
+                                    stroke={decorations["translation"].color}
+                                    fill={decorations["translation"].color}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="Entries"
+                                    stackId="1"
+                                    stroke={decorations["page"].color}
+                                    fill={decorations["page"].color}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="Senses"
+                                    stackId="1"
+                                    stroke={decorations["sense"].color}
+                                    fill={decorations["sense"].color}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="Translations"
+                                    stackId="1"
+                                    stroke={decorations["entry"].color}
+                                    fill={decorations["entry"].color}
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </Grid>
+                </Dialog>
+            )}
         </Grid>
     );
 };
