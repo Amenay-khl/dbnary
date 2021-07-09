@@ -309,7 +309,7 @@ const translationGlossesCube =
     " dbnary:translationsWithSenseNumber     ?translationsWithSenseNumber .\n" +
     "} \n" +
     "GROUP BY ?l\n" +
-    "ORDER BY ?";
+    "ORDER BY ?l";
 
 export async function doTranslationGlossesCube(): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
