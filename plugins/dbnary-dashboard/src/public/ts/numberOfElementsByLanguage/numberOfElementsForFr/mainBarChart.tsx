@@ -122,12 +122,11 @@ const langNameFormatter = (label: any) => {
 const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const classes = useStyles();
-    console.log("langue2 :");
-    console.log(langue);
+
     useEffect(() => {
         donumberOfElementsByLanguage(langue).then(normalizeSparqlData).then(setData);
     }, []);
-    console.log(data);
+
     return (
         <Grid
             container

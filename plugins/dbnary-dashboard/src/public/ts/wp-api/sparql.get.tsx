@@ -182,9 +182,6 @@ const numberOfElementsByLanguage = (langue) =>
     "ORDER BY ?maxversion";
 
 export async function donumberOfElementsByLanguage(langue): Promise<SparqlResponse> {
-    console.log(numberOfElementsByLanguage(langue));
-    console.log(langue);
-
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
@@ -193,7 +190,7 @@ export async function donumberOfElementsByLanguage(langue): Promise<SparqlRespon
     });
 }
 
-const numberOfLexicalRelationsForFr =
+const numberOfLexicalRelationsByLanguage = (langue) =>
     "SELECT ?l , ?maxversion, ?nym, ?count  \n" +
     "WHERE{\n" +
     "?o a qb:Observation;\n" +
@@ -202,19 +199,21 @@ const numberOfLexicalRelationsForFr =
     "dbnary:wiktionaryDumpVersion ?maxversion;\n" +
     "dbnary:nymRelation ?nym;\n" +
     "dbnary:count ?count .\n" +
-    "filter(?l='fr')     }\n" +
+    "filter(?l='" +
+    langue +
+    "')     }\n" +
     "ORDER BY ?maxversion";
 
-export async function doNumberOfLexicalRelationsForFr(): Promise<SparqlResponse> {
+export async function doNumberOfLexicalRelationsByLanguage(langue): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
-            query: numberOfLexicalRelationsForFr
+            query: numberOfLexicalRelationsByLanguage(langue)
         }
     });
 }
 
-const numberOftranslationsForFr =
+const numberOftranslationsByLanguage = (langue) =>
     "PREFIX lemon:<http://www.w3.org/ns/lemon/lime#>\n" +
     "SELECT ?l , ?maxversion, ?Languages, ?count   WHERE{\n" +
     "?o a qb:Observation; \n" +
@@ -223,15 +222,17 @@ const numberOftranslationsForFr =
     "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
     "lemon:language ?Languages; \n" +
     "dbnary:count ?count . \n" +
-    "filter(?l='fr').\n" +
+    "filter(?l='" +
+    langue +
+    "').\n" +
     "} \n" +
     "ORDER BY ?maxversion";
 
-export async function doNumberOftranslationsForFr(): Promise<SparqlResponse> {
+export async function doNumberOftranslationsByLanguage(langue): Promise<SparqlResponse> {
     return await request<SparqlRequest, SparqlParams, SparqlResponse>({
         location: sparqlGetLocation,
         params: {
-            query: numberOftranslationsForFr
+            query: numberOftranslationsByLanguage(langue)
         }
     });
 }

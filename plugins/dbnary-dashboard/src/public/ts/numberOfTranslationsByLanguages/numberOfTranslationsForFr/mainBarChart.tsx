@@ -15,8 +15,7 @@ import {
 } from "recharts";
 import {
     doMainCountsForAllLexicalRelations,
-    doNumberOfLexicalRelationsForFr,
-    doNumberOftranslationsForFr,
+    doNumberOftranslationsByLanguage,
     SparqlResponse,
     TypedValue
 } from "../../wp-api/sparql.get";
@@ -33,7 +32,11 @@ function valueAsInt(val: TypedValue): number {
 }
 
 /* The decorations to provide to the generic barchart */
-type MainBarChartProps = { decorations: Record<string, DecorationSpec>; provider: () => Promise<SparqlResponse> };
+type MainBarChartProps = {
+    decorations: Record<string, DecorationSpec>;
+    provider: () => Promise<SparqlResponse>;
+    langue;
+};
 
 const types: Record<string, (tval: TypedValue) => any> = {
     Language: valueAsString,
@@ -140,14 +143,14 @@ function pivot(data) {
     );
 }
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
         { l: "bg", maxversion: "20210620", Languages: "it", count: "1202" }
     ]);
     const classes = useStyles();
 
     useEffect(() => {
-        doNumberOftranslationsForFr().then(normalizeSparqlData).then(setData);
+        doNumberOftranslationsByLanguage(langue).then(normalizeSparqlData).then(setData);
     }, []);
 
     const result = groupBy(data, "maxversion").map(pivot);

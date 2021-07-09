@@ -6,13 +6,8 @@ import { doMainCountsForAllLanguages, SparqlResponse, TypedValue } from "../wp-a
 import { DecorationSpec } from "./styles";
 import { format as d3Format } from "d3-format";
 import { getEnglishName } from "../utils/iso636_1";
-<<<<<<< HEAD
-import * as css from "./style.css";
-import BarGraph from "./BarChart";
-=======
 import Dialog from "@material-ui/core/Dialog";
 import BarGraph from "./barGraph";
->>>>>>> 60b0012fe911d2b31aa053ec5a4b2f19e514f9c7
 
 function valueAsString(val: TypedValue): string {
     return val.value;
@@ -113,12 +108,6 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
     };
 
     const classes = useStyles();
-    let inputLabels = [
-        { key: "Vocables", color: decorations["vocable"].color },
-        { key: "Entries", color: decorations["entry"].color },
-        { key: "Senses", color: decorations["sense"].color },
-        { key: "Translations", color: decorations["translation"].color }
-    ];
 
     let inputLabels = [
         { key: "Vocables", color: "#fdff00" },
@@ -144,11 +133,7 @@ const MainBarChart: FC<MainBarChartProps> = ({ decorations, provider, ...rest })
         >
             <Grid onClick={() => setState(!isOpen)} item xs={12} xl={6}>
                 <ResponsiveContainer width="100%" height={300}>
-<<<<<<< HEAD
-                    <BarGraph title="test" data={data} labels={inputLabels} />
-=======
                     <BarGraph title="test" data={data} labels={inputLabels} open={false} />
->>>>>>> 60b0012fe911d2b31aa053ec5a4b2f19e514f9c7
                 </ResponsiveContainer>
             </Grid>
             {isOpen && (

@@ -3,12 +3,11 @@ import { MainBarChart } from "./mainBarChart";
 import { decorations } from "./styles";
 
 /* istanbul ignore next: Example implementations gets deleted the most time after plugin creation! */
-const NumberOfLexicalRelationsForFr: FC<{}> = () => {
+const NumberOfLexicalRelationsByLanguage = ({ langue }) => {
     return (
         <div className="wp-styleguide">
-            <MainBarChart decorations={decorations} />
+            <MainBarChart decorations={decorations} langue={langue} />
         </div>
     );
 };
-
-export { NumberOfLexicalRelationsForFr };
+export { NumberOfLexicalRelationsByLanguage };
