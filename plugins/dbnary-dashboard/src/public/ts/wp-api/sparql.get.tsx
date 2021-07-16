@@ -5,7 +5,6 @@ import {
     RouteRequestInterface,
     RouteParamsInterface
 } from "@dbnary-dashboard/utils";
-import { version } from "fork-ts-checker-webpack-plugin";
 import { request } from "../utils";
 
 export const sparqlGetLocation: RouteLocationInterface = {

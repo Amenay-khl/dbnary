@@ -2,7 +2,6 @@ import { AppBar, colors, Grid, makeStyles, Tab, Tabs, Box, Typography } from "@m
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MainBarChart } from "./mainBarChart";
-import { NumberOfElementsByLanguage } from "../numberOfElementsByLanguage/numberOfElementsForFr";
 
 //import { MaquetteByLanguages } from "./maquetteByLanguages";
 import { doAllLanguagesForNavBar, SparqlResponse, TypedValue } from "../wp-api";

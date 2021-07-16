@@ -35,7 +35,6 @@ function valueAsInt(val: TypedValue): number {
 /* The decorations to provide to the generic barchart */
 type MainBarChartProps = {
     decorations: Record<string, DecorationSpec>;
-    provider: () => Promise<SparqlResponse>;
     langue;
 };
 
@@ -119,7 +118,7 @@ const langNameFormatter = (label: any) => {
     return label instanceof Number ? <span>{label}</span> : <span>{getEnglishName(label)}</span>;
 };
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>(null);
     const [isOpen, setState] = useState(false);
     const classes = useStyles();
