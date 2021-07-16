@@ -10,23 +10,23 @@ import Grid from "@material-ui/core/Grid";
 
 const MainBarChart: FC<{}> = () => {
     return (
-        <Grid container item xs={12} spacing={3} justify="space-between" alignItems="center">
-            <Grid item xs={4}>
+        <Grid container item xs={12} spacing={3}>
+            <Grid item xs={12} sm={4}>
                 <NumberOfElements />{" "}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
                 <NumberOfLexicalRelations />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
                 <NumberOfTranslations />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
                 <EnhancementConfidence />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
                 <NumberOfElements />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
                 <NumberOfElements />
             </Grid>
         </Grid>
