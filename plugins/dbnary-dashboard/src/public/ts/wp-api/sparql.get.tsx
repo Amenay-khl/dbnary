@@ -320,31 +320,31 @@ export async function doTranslationGlossesCube(): Promise<SparqlResponse> {
     });
 }
 
-cont confidenceDataCubeByLanguage =
-"SELECT ?l , ?maxversion, ?enhancementMethod , ?f1Measure,?precisionMeasure,?recallMeasure   WHERE{\n" +
+const confidenceDataCubeByLanguage =
+    "SELECT ?l , ?maxversion, ?enhancementMethod , ?f1Measure,?precisionMeasure,?recallMeasure   WHERE{\n" +
     "   {\n" +
-        "   # Select the latest verison \n" +
-        "SELECT distinct(?version) as ?maxversion \n" +
-        "WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
-        "ORDER BY DESC (?version) LIMIT 1 \n" +
-        "} \n" +
-        "?o a qb:Observation; \n" +
-        "qb:dataSet dbnstats:enhancementConfidenceDataCube; \n" +
-        "dbnary:observationLanguage ?l;\n" +
-        "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
-        "dbnary:enhancementMethod ?enhancementMethod ; \n" +
-        "dbnary:f1Measure  ?f1Measure ;\n" +
-        "dbnary:precisionMeasure   ?precisionMeasure ;\n" +
-        "dbnary:recallMeasure    ?recallMeasure .\n" +
-        "filter(?l='fr').\n" +
-        "} \n" +
-        "GROUP BY ?l";
+    "   # Select the latest verison \n" +
+    "SELECT distinct(?version) as ?maxversion \n" +
+    "WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
+    "ORDER BY DESC (?version) LIMIT 1 \n" +
+    "} \n" +
+    "?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:enhancementConfidenceDataCube; \n" +
+    "dbnary:observationLanguage ?l;\n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "dbnary:enhancementMethod ?enhancementMethod ; \n" +
+    "dbnary:f1Measure  ?f1Measure ;\n" +
+    "dbnary:precisionMeasure   ?precisionMeasure ;\n" +
+    "dbnary:recallMeasure    ?recallMeasure .\n" +
+    "filter(?l='fr').\n" +
+    "} \n" +
+    "GROUP BY ?l";
 
-        export async function duConfidenceDataCubeByLanguage(): Promise<SparqlResponse> {
-            return await request<SparqlRequest, SparqlParams, SparqlResponse>({
-                location: sparqlGetLocation,
-                params: {
-                    query: confidenceDataCubeByLanguage
-                }
-            });
+export async function duConfidenceDataCubeByLanguage(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: confidenceDataCubeByLanguage
         }
+    });
+}
