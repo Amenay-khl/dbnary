@@ -322,12 +322,6 @@ export async function doTranslationGlossesCube(): Promise<SparqlResponse> {
 
 const confidenceDataCubeByLanguage =
     "SELECT ?l , ?maxversion, ?enhancementMethod , ?f1Measure,?precisionMeasure,?recallMeasure   WHERE{\n" +
-    "   {\n" +
-    "   # Select the latest verison \n" +
-    "SELECT distinct(?version) as ?maxversion \n" +
-    "WHERE {?s dbnary:wiktionaryDumpVersion ?version .}\n" +
-    "ORDER BY DESC (?version) LIMIT 1 \n" +
-    "} \n" +
     "?o a qb:Observation; \n" +
     "qb:dataSet dbnstats:enhancementConfidenceDataCube; \n" +
     "dbnary:observationLanguage ?l;\n" +
