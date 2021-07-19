@@ -12,8 +12,8 @@ import { NumberOfElements } from "./numberOfElements/";
 import { NumberOfLexicalRelations } from "./numberOfLexicalRelations/";
 import { NumberOfTranslations } from "./numberOfTranslations/";
 import { NumberOfElementsByLanguage } from "./numberOfElementsByLanguage/numberOfElementsForFr/";
-import { NumberOfLexicalRelationsForFr } from "./numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
-import { NumberOfTranslationsForFr } from "./numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
+import { NumberOfLexicalRelationsByLanguage } from "./numberOfLexicalRelationsByLanguage/numberOfLexicalRelationsForFr/";
+import { NumberOfTranslationsByLanguage } from "./numberOfTranslationsByLanguages/numberOfTranslationsForFr/";
 import { Maquette } from "./Maquette/";
 // Query DOM for the shortcod div (we assume the shortcode is used only once in a page).
 const node = document.getElementById(`${RootStore.get.optionStore.slug}-dashboard`);
@@ -73,7 +73,7 @@ if (node5) {
 if (node6) {
     render(
         <RootStore.StoreProvider>
-            <NumberOfLexicalRelationsForFr />
+            <NumberOfLexicalRelationsByLanguage langue="fr" />
         </RootStore.StoreProvider>,
         node6
     );
@@ -82,7 +82,7 @@ if (node6) {
 if (node7) {
     render(
         <RootStore.StoreProvider>
-            <NumberOfTranslationsForFr />
+            <NumberOfTranslationsByLanguage langue="fr" />
         </RootStore.StoreProvider>,
         node7
     );

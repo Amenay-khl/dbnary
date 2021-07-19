@@ -35,7 +35,6 @@ function valueAsInt(val: TypedValue): number {
 /* The decorations to provide to the generic barchart */
 type MainBarChartProps = {
     decorations: Record<string, DecorationSpec>;
-    provider: () => Promise<SparqlResponse>;
     langue;
 };
 
@@ -144,7 +143,7 @@ function pivot(data) {
     );
 }
 
-const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, provider, ...rest }) => {
+const MainBarChart: FC<MainBarChartProps> = ({ decorations, langue, ...rest }) => {
     const [data, setData] = useState<Array<Record<string, any>>>([
         { l: "bg", maxversion: "20210620", Languages: "it", count: "1202" }
     ]);

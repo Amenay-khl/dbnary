@@ -2,10 +2,9 @@ import { AppBar, colors, Grid, makeStyles, Tab, Tabs, Box, Typography } from "@m
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MainBarChart } from "./mainBarChart";
-import { NumberOfElementsByLanguage } from "../numberOfElementsByLanguage/numberOfElementsForFr";
 
 //import { MaquetteByLanguages } from "./maquetteByLanguages";
-import { doAllLanguagesForNavBar, doNumberOfLexicalRelationsForFr, SparqlResponse, TypedValue } from "../wp-api";
+import { doAllLanguagesForNavBar, SparqlResponse, TypedValue } from "../wp-api";
 import { LensTwoTone } from "@material-ui/icons";
 import { StatsLine } from "../dashboard/statsLine";
 import { decorations } from "./styles";
@@ -54,8 +53,6 @@ function normalizeSparqlData(response: SparqlResponse): Array<Record<string, any
             result.push(resultRec);
         });
     }
-    console.log("results");
-    console.log(result);
     return result;
 }
 
@@ -83,11 +80,10 @@ export default function Navbar() {
     useEffect(() => {
         doAllLanguagesForNavBar().then(normalizeSparqlData).then(setData);
     }, []);
-    console.log("data :");
-    console.log(data);
     let x = 1;
     return (
         <div>
+            <StatsLine decorations={decorations} />
             <AppBar position="static">
                 <Tabs
                     value={value}
@@ -103,16 +99,16 @@ export default function Navbar() {
                     })}
                 </Tabs>
             </AppBar>
-            {(x = 0)}
+            <div id="divCheckbox" style={{ display: "none" }}>
+                {(x = 0)}
+            </div>
             <TabPanel value={value} index={0}>
-                <StatsLine decorations={decorations} />
                 <MainBarChart />
             </TabPanel>
             {data.map((label) => {
                 x += 1;
                 return (
                     <TabPanel value={value} index={x}>
-                        <div>{label.Language}</div>
                         <MaquetteByLanguages langue={label.Language} />
                     </TabPanel>
                 );
