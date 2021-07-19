@@ -348,3 +348,27 @@ export async function duConfidenceDataCubeByLanguage(): Promise<SparqlResponse> 
         }
     });
 }
+
+const glossesCubeByLanguage =
+    "SELECT ?l , ?maxversion, ?translationsWithSenseNumberAndTextualGloss , ?translationsWithNoGloss ,?translationsWithTextualGloss ,?translationsWithSenseNumber WHERE{\n" +
+    "   ?o a qb:Observation; \n" +
+    "qb:dataSet dbnstats:translationGlossesCube; \n" +
+    "dbnary:observationLanguage ?l; \n" +
+    "dbnary:wiktionaryDumpVersion ?maxversion; \n" +
+    "dbnary:translationsWithSenseNumberAndTextualGloss  ?translationsWithSenseNumberAndTextualGloss ; \n" +
+    "dbnary:translationsWithNoGloss  ?translationsWithNoGloss ;\n" +
+    " dbnary:translationsWithTextualGloss    ?translationsWithTextualGloss ;\n" +
+    " dbnary:translationsWithSenseNumber     ?translationsWithSenseNumber .\n" +
+    "filter(?l='fr').\n" +
+    " } \n" +
+    " GROUP BY ?l\n" +
+    "ORDER BY ?l";
+
+export async function doGlossesCubeByLanguage(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: glossesCubeByLanguage
+        }
+    });
+}
