@@ -366,3 +366,37 @@ export async function doGlossesCubeByLanguage(): Promise<SparqlResponse> {
         }
     });
 }
+
+const mainCountsSparqlQueryByLanguage =
+    "select ?l, ?latestversions as ?version, \n" +
+    "sum(?pages) as ?pageCount,\n" +
+    "sum(?translations) as ?translationCount,\n" +
+    "sum(?lexicalSenses) as ?senseCount,\n" +
+    "sum(?lexicalEntries) as ?entryCount\n" +
+    "where {\n" +
+    "{\n" +
+    " # Select the 2 latest versions\n" +
+    "SELECT distinct(?version) as ?latestversions\n" +
+    " WHERE { ?s dbnary:wiktionaryDumpVersion ?version . }\n" +
+    "ORDER BY DESC(?version) LIMIT 2\n" +
+    "}\n" +
+    "?obs qb:dataSet dbnstats:dbnaryStatisticsCube ;\n" +
+    " dbnary:wiktionaryDumpVersion ?latestversions ;\n" +
+    " dbnary:observationLanguage ?l;\n" +
+    " dbnary:pageCount ?pages;\n" +
+    "dbnary:translationsCount ?translations;\n" +
+    "dbnary:lexicalSenseCount ?lexicalSenses;\n" +
+    "dbnary:lexicalEntryCount ?lexicalEntries.\n" +
+    "filter(?l='fr').\n" +
+    "}\n" +
+    "GROUP BY ?latestversions ?l\n" +
+    "ORDER BY desc(?latestversions)";
+
+export async function doMainCountsSparqlQueryByLanguage(): Promise<SparqlResponse> {
+    return await request<SparqlRequest, SparqlParams, SparqlResponse>({
+        location: sparqlGetLocation,
+        params: {
+            query: mainCountsSparqlQueryByLanguage
+        }
+    });
+}
